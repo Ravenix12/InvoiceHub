@@ -23,13 +23,11 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
       const login_verified = Object.keys(data).length;
-      if (login_verified === 1) {
-        
-        //window.location.href = 'dashboard/mainpage';
-        // window.location.href = 'html/landingpage.html';
-        console.log(login_verified);
+      if (login_verified === 1) {        
+        const localData =JSON.stringify(data);
+        sessionStorage.setItem('localData',localData);
+        window.location.href = 'html/landingpage.html';
       } else {
         alert('Invalid username or password');
       }
