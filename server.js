@@ -37,6 +37,28 @@ app.post('/api/login', (req, res) => {
 });
 
 
+// Handle signup request
+app.post('/signup', (req, res) => {
+    const { name, password, email, userType } = req.body;
+  
+    console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", );
+  
+    const default_access = "guest";
+    const query = `INSERT INTO ${table_name.login} (user, password, email, mode) VALUES (?, ?, ?, ?)`;
+  
+    connection.query(query, [name, password, email, default_access], (err, results) => {
+      if (err) {
+        console.error('Error occurred during signup:', err);
+        res.status(500).json({ error: 'An error occurred during signup' });
+      } else {
+        console.log('Signup successful!');
+        res.status(200).json({ message: 'Signup successful' });
+      }
+    });
+  });
+  
+
+
 
   
 app.use(express.static('public'));
@@ -45,3 +67,9 @@ app.use(express.static('public'));
 app.listen(3000,'0.0.0.0', () => {
     console.log('Server listening on port 3000');
 });
+
+
+
+// 
+
+

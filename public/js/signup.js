@@ -9,14 +9,64 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     const userType = formData.get("user-type");
   
     // Call the validateSignup function and pass the form data
-    validateSignup(name, password, email, userType);
+    Signup(name, password, email, userType);
   });
   
-  function validateSignup(name, password, email, userType) {
-    // Perform validation logic or make AJAX requests for signup validation
-    // ...
+  // function Signup(name, password, email, userType) {  
+  //   console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", userType);
+  //   const default_access = "guest";
+  //   // Construct the SQL query
+  //   const query = `INSERT INTO users (name, password, email, userType) VALUES (?, ?, ?, ?)`;
+  
+  //   // Execute the query with the provided data
+  //   connection.query(query, [name, password, email, default_access], (err, results) => {
+  //     if (err) {
+  //       console.error('Error occurred during signup:', err);
+  //       // Handle the error as needed
+  //     } else {
+  //       console.log('Signup successful!');
+  //       // Handle the successful signup
+  //     }
+  //   });
+  // }
+  
+  function Signup(name, password, email, userType) {
     console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", userType);
+    const default_access = "guest";
+  
+    // Construct the request body
+    const requestBody = {
+      name: name,
+      password: password,
+      email: email,
+      userType: default_access
+    };
+  
+    // Make a POST request to the server-side method
+    fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Signup successful!');
+        // Handle the successful signup
+      } else {
+        console.error('Error occurred during signup:', response.statusText);
+        // Handle the error as needed
+      }
+    })
+    .catch(error => {
+      console.error('Error occurred during signup:', error);
+      // Handle the error as needed
+    });
   }
+  
+
+
   const passwordInput = document.getElementById("password");
   const passwordToggle = document.getElementById("password-toggle");
   
@@ -48,3 +98,7 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     })
     .catch(error => console.error(error));
   }
+
+
+
+
