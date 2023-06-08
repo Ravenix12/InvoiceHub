@@ -24,28 +24,7 @@ pool.on('error', (err) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// app.post('/api/index/login', async (req, res) => {
-//   const { username, password } = req.body;
-//   const sqlData = `SELECT * FROM ${table_name.login} WHERE user=? AND password=?`;
 
-//   try {
-//     const connection = await pool.getConnection();
-
-//     connection.query(sqlData, [username, password], (error, dataResults, fields) => {
-//       if (error) {
-//         console.error('Error occurred during login:', error);
-//         res.status(500).json({ error: 'An error occurred during login' });
-//       } else {
-//         res.json(dataResults);
-//       }
-
-//       connection.release();
-//     });
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
 app.post('/api/index/login', async (req, res) => {
   const { username, password } = req.body;
   const sqlData = `SELECT * FROM ${table_name.login} WHERE user=? AND password=?`;
@@ -63,83 +42,46 @@ app.post('/api/index/login', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 app.post('/check-account', async (req, res) => {
   const { user } = req.body;
-  console.log("1");
-
   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
   const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
+  const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
 
   try {
     const connection = await pool.getConnection();
-
     const [rows] = await connection.query(checkQuery, [user]);
-
     const count = rows[0].count;
     if (count > 0) {
-      // Account exists
-      console.log("Account exists");
-      res.status(200).json({ exists: true });
-    } else {
-      // Account doesn't exist, add it to the SQL table
-      console.log("Account does not exist");
-      await connection.query(insertQuery, [user]);
-      res.status(200).json({ exists: false });
-    }
+      // Account exists, delete the record
+      console.log("Account exists and the record is not touched");
+      await connection.query(deleteQuery, [user]);
+      // Sql Rule to make this work < ignore for now >
+    //DELIMITER //
 
+    // CREATE TRIGGER delete_user_trigger
+    // AFTER DELETE ON account_flag
+    // FOR EACH ROW
+    // BEGIN
+    //   DELETE FROM users WHERE user = OLD.name;
+    // END //
+    // DELIMITER ;
+    // res.status(200).json({ exists: true }); THIS LINE CRASHES WHEN EXECUTED 
+  } else {
+    // Account doesn't exist, add it to the SQL table
+    console.log("Adding account to account_flag");
+    await connection.query(insertQuery, [user]);
+    res.status(200).json({ exists: false });
+
+  }
+  
     connection.release();
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-// app.post('/check-account', (req, res) => {
-//   const { user } = req.body;
-//   console.log("1");
-
-
-//   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE user = ?`;
-//   const insertQuery = `INSERT INTO ${table_name.delete_flag} (user) VALUES (?)`;
-
-//   pool.getConnection((err, connection) => {
-//     if (err) {
-//       console.error('Error occurred during account check:', err);
-//       res.status(500).json({ error: 'An error occurred during account check' });
-//       console.log("2");
-//       return;
-//     }
-//     console.log("3");
-
-//     connection.query(checkQuery, [user], (err, results) => {
-//       if (err) {
-//         console.error('Error occurred during account check:', err);
-//         connection.release();
-//         res.status(500).json({ error: 'An error occurred during account check' });
-//       } else {
-//         console.log("soemthing is haoppeneind ");
-//         const count = results[0].count;
-//         if (count > 0) {
-//           // Account exists
-//           console.log("account exists");
-//           res.status(200).json(1);
-//         } else {
-//           // Account doesn't exist, add it to the SQL table
-//           console.log("account does not exist");
-//           connection.query(insertQuery, [user], (err) => {
-//             connection.release();
-//             if (err) {
-//               console.error('Error occurred while inserting account:', err);
-//               res.status(500).json({ error: 'An error occurred while inserting account' });
-//             } else {
-//               res.status(200).json(0);
-//             }
-//           });
-//         }
-//       }
-//     });
-//   });
-// });
 
 
 app.post('/signup', async (req, res) => {
@@ -223,4 +165,41 @@ app.use(express.static('public'));
 // Start the server on port 3001 (or another port of your choice)
 app.listen(3000,'0.0.0.0', () => {
     console.log('Server listening on port 3000');
+});
+
+
+
+
+
+app.post('/check-account', async (req, res) => {
+  const { user } = req.body;
+  const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
+  const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
+  const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
+
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(checkQuery, [user]);
+    const count = rows[0].count;
+    if (count > 0) {
+      // Account exists, delete the record
+      console.log("Account exists and the record is not touched");
+      await connection.query(deleteQuery, [user]);
+    // res.status(200).json({ exists: true }); THIS LINE CRASHES WHEN EXECUTED 
+    try {
+      res.status(200).json({ exists: true });
+    } catch (jsonError) {
+      console.error("JSON Error:", jsonError);
+    }
+  } else {
+    // Account doesn't exist, add it to the SQL table
+    console.log("Adding account to account_flag");
+    await connection.query(insertQuery, [user]);
+    res.status(200).json({ exists: false });
+  }
+    connection.release();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });

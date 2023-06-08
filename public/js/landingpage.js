@@ -19,9 +19,12 @@ document.getElementById("deleteaccount").addEventListener('click',function(event
             throw new Error('Network response was not ok.');
           })
           .then((result) => {
-            if (result === 1) {
+
+            if (result.exists) {
+
               // Account exists in SQL table
               console.log('Account exists');
+              window.location.replace("https://localhost:3000");
             } else {
               // Account doesn't exist in SQL table
               console.log('Account does not exist');
