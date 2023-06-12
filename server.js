@@ -4,8 +4,7 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const app = express();
-const upload = multer();
-const table_name ={ login:"users" ,main:"placeHolder",delete_flag:"account_flag",images:"Images"};
+const table_name ={ login:"users" ,main:"placeHolder",delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev"};
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -23,7 +22,6 @@ pool.on('error', (err) => {
 // Use middleware to parse HTTP POST request data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 app.post('/api/index/login', async (req, res) => {
   const { username, password } = req.body;
@@ -54,29 +52,84 @@ app.post('/check-account', async (req, res) => {
     const [rows] = await connection.query(checkQuery, [user]);
     const count = rows[0].count;
     if (count > 0) {
-      // Account exists, delete the record
-      console.log("Account exists and the record is not touched");
+      console.log("Account exists and the record is deleted");
       await connection.query(deleteQuery, [user]);
-      // Sql Rule to make this work < ignore for now >
-    //DELIMITER //
-
-    // CREATE TRIGGER delete_user_trigger
-    // AFTER DELETE ON account_flag
-    // FOR EACH ROW
-    // BEGIN
-    //   DELETE FROM users WHERE user = OLD.name;
-    // END //
-    // DELIMITER ;
-    // res.status(200).json({ exists: true }); THIS LINE CRASHES WHEN EXECUTED 
   } else {
     // Account doesn't exist, add it to the SQL table
     console.log("Adding account to account_flag");
     await connection.query(insertQuery, [user]);
     res.status(200).json({ exists: false });
-
   }
-  
     connection.release();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/elevate-privilege', async (req, res) => {
+  const { user } = req.body;
+  const flag = 1;
+  const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.handle_privilege} WHERE user = ?`;
+  const insertQuery = `INSERT INTO ${table_name.handle_privilege} (flag,user) VALUES (?,?) ON DUPLICATE KEY UPDATE user = user`;
+ 
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query(checkQuery, [user]);
+    const count = rows[0].count;
+
+    if (count > 0) {
+
+      res.status(200).json({ exists: true });
+    } else {
+      // Account doesn't exist, elevate privilege by inserting the record
+      console.log("Elevating privilege for the account");
+      await connection.query(insertQuery, [flag,user]);
+    }
+    connection.release();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+app.get('/check-requests', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const selectQuery = `SELECT id, user FROM ${table_name.handle_privilege}`;
+    const [rows] = await connection.query(selectQuery);
+    connection.release();
+
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/approve-request', async (req, res) => {
+  const { requestId } = req.body;
+
+  try {
+    const connection = await pool.getConnection();
+
+    // Retrieve the user from the elevate privileges table
+    const selectQuery = `SELECT user FROM ${table_name.handle_privilege} WHERE id = ?`;
+    const [rows] = await connection.query(selectQuery, [requestId]);
+    const user = rows[0].user;
+
+    // Update the main table and set the mode to 'admin' for the specific user
+    const updateQuery = `UPDATE ${table_name.login} SET mode = 'admin' WHERE user = ?`;
+    await connection.query(updateQuery, [user]);
+
+    // Delete the request from the elevate privileges table
+    const deleteQuery = `DELETE FROM ${table_name.handle_privilege} WHERE id = ?`;
+    await connection.query(deleteQuery, [requestId]);
+
+    connection.release();
+
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -95,70 +148,21 @@ app.post('/signup', async (req, res) => {
   try {
     const connection = await pool.getConnection();
 
-    connection.query(query, [name, password, email, default_access], (err, results) => {
-      if (err) {
-        console.error('Error occurred during signup:', err);
-        res.status(500).json({ error: 'An error occurred during signup' });
-      } else {
-        console.log('Signup successful!');
-        res.status(200).json({ message: 'Signup successful' });
-      }
+    const results = await connection.query(query, [name, password, email, default_access]);
 
-      connection.release();
-    });
+    console.log('Signup successful!');
+    res.status(200).json({ message: 'Signup successful' });
+
+    connection.release();
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    if (error.code === 'ER_DUP_ENTRY') {
+      res.status(409).json({ error: 'Duplicate entry', field: 'user' });
+    } else {
+      res.status(500).json({ error: 'An error occurred during signup' });
+    }
   }
 });
-
-
-// // Route for handling image upload and SQL operation
-// app.post('/upload', upload.single('image'), (req, res) => {
-//   if (!req.file) {
-//     return res.status(400).send('No image file found.');
-//   }
-
-//   // Get the image data as a base64-encoded string
-//   const imageSrc = req.file.buffer.toString('base64');
-
-//   // Execute SQL statement with the image data
-//   const sqlStatement = `INSERT INTO Images (image_data) VALUES ('${imageSrc}');`;
-//   connection.query(sqlStatement, (error, results) => {
-//     if (error) {
-//       console.error('Error executing SQL statement:', error);
-//       return res.status(500).send('Error executing SQL statement.');
-//     }
-
-//     // SQL operation successful
-//     console.log('Image uploaded and saved to database.');
-
-//     // Send a success response to the client
-//     res.status(200).send('Image uploaded successfully.');
-//   });
-// });
-
-// // Assuming you have set up your server and route handling
-// app.get('/displayImage', (req, res) => {
-//   // Retrieve the image data from the database (replace this with your own logic)
-//   connection.query(`SELECT image_data FROM ${table_name.image} WHERE id = ?`, [2], (error, results) => {
-//     if (error) {
-//       console.error('Error retrieving image data:', error);
-//       return res.status(500).send('Error retrieving image data.');
-//     }
-
-//     if (results.length === 0 || !results[0].image_data) {
-//       return res.status(404).send('Image data not found.');
-//     }
-
-//     // Convert the image data to base64
-//     const imageSrc = results[0].image_data.toString('base64');
-
-//     // Send the image source to the client
-//     res.status(200).send(imageSrc);
-//   });
-// });
-
 
 app.use(express.static('public'));
 
@@ -166,10 +170,6 @@ app.use(express.static('public'));
 app.listen(3000,'0.0.0.0', () => {
     console.log('Server listening on port 3000');
 });
-
-
-
-
 
 app.post('/check-account', async (req, res) => {
   const { user } = req.body;

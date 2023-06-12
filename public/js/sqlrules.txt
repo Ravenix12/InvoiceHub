@@ -1,0 +1,10 @@
+      // Sql Rule to make this work for delete cascade from account_flag to user
+    //DELIMITER //
+
+    // CREATE TRIGGER delete_user_trigger
+    // AFTER DELETE ON account_flag
+    // FOR EACH ROW
+    // BEGIN
+    //   DELETE FROM users WHERE user = OLD.name;
+    // END //
+    // DELIMITER ;

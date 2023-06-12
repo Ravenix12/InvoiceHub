@@ -54,9 +54,12 @@ document.getElementById("signup-form").addEventListener("submit", function(event
       if (response.ok) {
         console.log('Signup successful!');
         // Handle the successful signup
+      } else if (response.status === 409) {
+        console.error('Error occurred during signup: Duplicate entry');
+        // Handle the duplicate entry error
       } else {
         console.error('Error occurred during signup:', response.statusText);
-        // Handle the error as needed
+        // Handle other errors
       }
     })
     .catch(error => {
@@ -65,8 +68,6 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     });
   }
   
-
-
   const passwordInput = document.getElementById("password");
   const passwordToggle = document.getElementById("password-toggle");
   
