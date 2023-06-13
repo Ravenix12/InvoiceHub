@@ -108,43 +108,80 @@ function requestAdminAccess() {
     });
 }
 
+// function checkRequests() {
+//   fetch('/check-requests')
+//     .then(response => response.json())
+//     .then(data => {
+//       console.log(data);
+//       const requestsContainer = document.getElementById('requests');
+//       requestsContainer.innerHTML = '';
+
+//       if (data.length > 0) {
+       
+//         data.forEach(request => {
+//           const row = document.createElement('div');
+//           row.className = 'row';
+
+//           const requestInfo = document.createElement('span');
+//           requestInfo.textContent = request.user;
+
+//           const approveButton = document.createElement('button');
+//           approveButton.textContent = 'Approve';
+//           approveButton.addEventListener('click', () => approveRequest(request.id));
+
+//           row.appendChild(requestInfo);
+//           row.appendChild(approveButton);
+//           requestsContainer.appendChild(row);
+//         });
+//       } else {
+//         const noRequestsMessage = document.createElement('span');
+//         noRequestsMessage.textContent = 'No requests found';
+//         requestsContainer.appendChild(noRequestsMessage);
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// }
+
 function checkRequests() {
   fetch('/check-requests')
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       const requestsContainer = document.getElementById('requests');
-      requestsContainer.innerHTML = '';
+      requestsContainer.innerHTML = ''; // Clear previous content
 
       if (data.length > 0) {
-       
         data.forEach(request => {
           const row = document.createElement('div');
-          row.className = 'row';
+          row.classList.add('row');
 
-          const requestInfo = document.createElement('span');
-          requestInfo.textContent = request.user;
+          const user = document.createElement('div');
+          user.classList.add('user');
+          user.textContent = request.user;
 
           const approveButton = document.createElement('button');
           approveButton.textContent = 'Approve';
-          approveButton.addEventListener('click', () => approveRequest(request.id));
+          approveButton.addEventListener('click', () => {
+            approveRequest(request.id, row);
+          });
 
-          row.appendChild(requestInfo);
+          row.appendChild(user);
           row.appendChild(approveButton);
           requestsContainer.appendChild(row);
         });
       } else {
-        const noRequestsMessage = document.createElement('span');
-        noRequestsMessage.textContent = 'No requests found';
-        requestsContainer.appendChild(noRequestsMessage);
+        const noRequests = document.createElement('div');
+        noRequests.textContent = 'No requests found.';
+        requestsContainer.appendChild(noRequests);
       }
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error occurred while checking requests:', error);
     });
 }
 
-function approveRequest(requestId) {
+function approveRequest(requestId, row) {
   fetch('/approve-request', {
     method: 'POST',
     headers: {
@@ -154,10 +191,14 @@ function approveRequest(requestId) {
   })
     .then(response => response.json())
     .then(data => {
-      console.log('Request approved:', data);
-      // Perform any necessary actions after approval
+      if (data.success) {
+        row.remove(); // Remove the row from the DOM if the request is successfully approved
+      } else {
+        console.error('Error occurred while approving request:', data.error);
+      }
     })
     .catch(error => {
-      console.error('Error:', error);
+      console.error('Error occurred while approving request:', error);
     });
 }
+
