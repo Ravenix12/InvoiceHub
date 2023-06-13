@@ -54,8 +54,11 @@ function fillTable() {
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
 
 const dangerzoneDiv = document.getElementById('dangerzone');
+const dangerZoneElement = document.createElement("div")
+  dangerZoneElement.classList.add("dangerzone-elem")
 
 if (localData.mode=="admin") {
+  
   // Admin mode: render title requests under a bold and small heading tag
   const heading = document.createElement('h3');
   const boldText = document.createElement('b');
@@ -70,9 +73,9 @@ if (localData.mode=="admin") {
   requestsDiv.id = 'requests';
 
   // Append the heading and requests div to the dangerzone div
+
   dangerzoneDiv.appendChild(heading);
   dangerzoneDiv.appendChild(requestsDiv);
-
   checkRequests();
 } else {
   // Not in admin mode: render a button to request admin access
@@ -81,13 +84,13 @@ if (localData.mode=="admin") {
   button.addEventListener('click', requestAdminAccess);
 
   // Append the button to the dangerzone div
-  dangerzoneDiv.appendChild(button);
+
+  dangerZoneElement.appendChild(button)
+  dangerzoneDiv.appendChild(dangerZoneElement);
 }
 
 function requestAdminAccess() {
   const user = `${localData.user}`; // Replace 'admin' with the actual user requesting admin access
-
-
   fetch('/elevate-privilege', {
     method: 'POST',
     headers: {
@@ -108,42 +111,6 @@ function requestAdminAccess() {
     });
 }
 
-// function checkRequests() {
-//   fetch('/check-requests')
-//     .then(response => response.json())
-//     .then(data => {
-//       console.log(data);
-//       const requestsContainer = document.getElementById('requests');
-//       requestsContainer.innerHTML = '';
-
-//       if (data.length > 0) {
-       
-//         data.forEach(request => {
-//           const row = document.createElement('div');
-//           row.className = 'row';
-
-//           const requestInfo = document.createElement('span');
-//           requestInfo.textContent = request.user;
-
-//           const approveButton = document.createElement('button');
-//           approveButton.textContent = 'Approve';
-//           approveButton.addEventListener('click', () => approveRequest(request.id));
-
-//           row.appendChild(requestInfo);
-//           row.appendChild(approveButton);
-//           requestsContainer.appendChild(row);
-//         });
-//       } else {
-//         const noRequestsMessage = document.createElement('span');
-//         noRequestsMessage.textContent = 'No requests found';
-//         requestsContainer.appendChild(noRequestsMessage);
-//       }
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-// }
-
 function checkRequests() {
   fetch('/check-requests')
     .then(response => response.json())
@@ -156,18 +123,32 @@ function checkRequests() {
           const row = document.createElement('div');
           row.classList.add('row');
 
+          const requestsWrapper = document.createElement('div');
+          requestsWrapper.classList.add('requests'); // Add 'requests' class
+
           const user = document.createElement('div');
           user.classList.add('user');
           user.textContent = request.user;
 
           const approveButton = document.createElement('button');
           approveButton.textContent = 'Approve';
+          approveButton.value = 'accept'; // Set the value to 1
           approveButton.addEventListener('click', () => {
-            approveRequest(request.id, row);
+            respondRequest(request.user, approveButton.value); // Call respondRequest with the value
           });
 
-          row.appendChild(user);
-          row.appendChild(approveButton);
+          const declineButton = document.createElement('button');
+          declineButton.textContent = 'Decline';
+          declineButton.value = 'decline'; // Set the value to 0
+          declineButton.addEventListener('click', () => {
+            respondRequest(request.user, declineButton.value); // Call respondRequest with the value
+          });
+
+          requestsWrapper.appendChild(user);
+          requestsWrapper.appendChild(approveButton);
+          requestsWrapper.appendChild(declineButton);
+
+          row.appendChild(requestsWrapper); // Add requestsWrapper to the row
           requestsContainer.appendChild(row);
         });
       } else {
@@ -181,24 +162,53 @@ function checkRequests() {
     });
 }
 
-function approveRequest(requestId, row) {
-  fetch('/approve-request', {
+
+function respondRequest(user, value) {
+  const payload = {
+    user: user,
+    action: value
+  };
+  console.log(payload);
+  fetch('/respond-request', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ requestId })
+    body: JSON.stringify(payload)
   })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        row.remove(); // Remove the row from the DOM if the request is successfully approved
+    .then(response => {
+      if (response.ok) {
+        // Handle successful response
+        console.log('Request response sent successfully.');
       } else {
-        console.error('Error occurred while approving request:', data.error);
+        // Handle error response
+        console.error('Failed to send request response.');
       }
     })
     .catch(error => {
-      console.error('Error occurred while approving request:', error);
+      console.error('An error occurred while sending request response:', error);
     });
 }
+
+
+// function approveRequest(requestId, row) {
+//   fetch('/approve-request', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({ requestId })
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       if (data.success) {
+//         row.remove(); // Remove the row from the DOM if the request is successfully approved
+//       } else {
+//         console.error('Error occurred while approving request:', data.error);
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error occurred while approving request:', error);
+//     });
+// }
 

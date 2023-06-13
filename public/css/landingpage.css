@@ -27,3 +27,21 @@ th {
   font-weight: bold;
 }
 
+#dangerzone{
+  display:flex;
+  flex-direction:column;
+}
+
+.dangerzone-elem{
+  width:fit-content;
+  margin:10px;
+
+}
+
+.requests{
+  display:flex;
+  margin:5px;
+}
+.requests>*{
+  margin:5px;
+}

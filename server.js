@@ -69,7 +69,7 @@ app.post('/check-account', async (req, res) => {
 
 app.post('/elevate-privilege', async (req, res) => {
   const { user } = req.body;
-  const flag = 1;
+  const flag = 0;
   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.handle_privilege} WHERE user = ?`;
   const insertQuery = `INSERT INTO ${table_name.handle_privilege} (flag,user) VALUES (?,?) ON DUPLICATE KEY UPDATE user = user`;
  
@@ -108,33 +108,33 @@ app.get('/check-requests', async (req, res) => {
   }
 });
 
-app.post('/approve-request', async (req, res) => {
-  const { requestId } = req.body;
+// app.post('/approve-request', async (req, res) => {
+//   const { requestId } = req.body;
 
-  try {
-    const connection = await pool.getConnection();
+//   try {
+//     const connection = await pool.getConnection();
 
-    // Retrieve the user from the elevate privileges table
-    const selectQuery = `SELECT user FROM ${table_name.handle_privilege} WHERE id = ?`;
-    const [rows] = await connection.query(selectQuery, [requestId]);
-    const user = rows[0].user;
+//     // Retrieve the user from the elevate privileges table
+//     const selectQuery = `SELECT user FROM ${table_name.handle_privilege} WHERE id = ?`;
+//     const [rows] = await connection.query(selectQuery, [requestId]);
+//     const user = rows[0].user;
 
-    // Update the main table and set the mode to 'admin' for the specific user
-    const updateQuery = `UPDATE ${table_name.login} SET mode = 'admin' WHERE user = ?`;
-    await connection.query(updateQuery, [user]);
+//     // Update the main table and set the mode to 'admin' for the specific user
+//     const updateQuery = `UPDATE ${table_name.login} SET mode = 'admin' WHERE user = ?`;
+//     await connection.query(updateQuery, [user]);
 
-    // Delete the request from the elevate privileges table
-    const deleteQuery = `DELETE FROM ${table_name.handle_privilege} WHERE id = ?`;
-    await connection.query(deleteQuery, [requestId]);
+//     // Delete the request from the elevate privileges table
+//     const deleteQuery = `DELETE FROM ${table_name.handle_privilege} WHERE id = ?`;
+//     await connection.query(deleteQuery, [requestId]);
 
-    connection.release();
+//     connection.release();
 
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+//     res.status(200).json({ success: true });
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
 
 app.post('/signup', async (req, res) => {
@@ -198,6 +198,41 @@ app.post('/check-account', async (req, res) => {
     res.status(200).json({ exists: false });
   }
     connection.release();
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+// Account Elev Flags
+// 0 -> Requested
+// 1 -> Accepted 
+// -1 -> declined
+app.post('/respond-request', async (req, res) => {
+  const { user, action } = req.body;
+  try {
+    const connection = await pool.getConnection();
+
+    if ( action == 'accept') {
+      // Retrieve the user from the elevate privileges table
+      const updateFlag = `UPDATE ${table_name.handle_privilege} set flag= ? WHERE user = ?`;
+      await connection.query(updateFlag, [1,user]);
+
+
+      // Update the main table and set the mode to 'admin' for the specific user
+      const updateQuery = `UPDATE ${table_name.login} SET mode = 'admin' WHERE user = ?`;
+      await connection.query(updateQuery, [user]);
+
+    } else if (action == 'decline') {
+      const updateFlag = `UPDATE ${table_name.handle_privilege} set flag= ? WHERE user = ?`;
+      await connection.query(updateFlag, [-1,user]);
+    } else {
+      // Invalid action
+      return res.status(400).json({ error: 'Invalid action' });
+    }
+
+    connection.release();
+
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: 'Internal Server Error' });
