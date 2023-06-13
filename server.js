@@ -41,31 +41,31 @@ app.post('/api/index/login', async (req, res) => {
   }
 });
 
-app.post('/check-account', async (req, res) => {
-  const { user } = req.body;
-  const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
-  const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
-  const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
+// app.post('/check-account', async (req, res) => {
+//   const { user } = req.body;
+//   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
+//   const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
+//   const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
 
-  try {
-    const connection = await pool.getConnection();
-    const [rows] = await connection.query(checkQuery, [user]);
-    const count = rows[0].count;
-    if (count > 0) {
-      console.log("Account exists and the record is deleted");
-      await connection.query(deleteQuery, [user]);
-  } else {
-    // Account doesn't exist, add it to the SQL table
-    console.log("Adding account to account_flag");
-    await connection.query(insertQuery, [user]);
-    res.status(200).json({ exists: false });
-  }
-    connection.release();
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+//   try {
+//     const connection = await pool.getConnection();
+//     const [rows] = await connection.query(checkQuery, [user]);
+//     const count = rows[0].count;
+//     if (count > 0) {
+//       console.log("Account exists and the record is deleted");
+//       await connection.query(deleteQuery, [user]);
+//   } else {
+//     // Account doesn't exist, add it to the SQL table
+//     console.log("Adding account to account_flag");
+//     await connection.query(insertQuery, [user]);
+//     res.status(200).json({ exists: false });
+//   }
+//     connection.release();
+//   } catch (error) {
+//     console.error("Error:", error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
 
 app.post('/elevate-privilege', async (req, res) => {
   const { user } = req.body;
@@ -95,9 +95,10 @@ app.post('/elevate-privilege', async (req, res) => {
 
 
 app.get('/check-requests', async (req, res) => {
+  
   try {
     const connection = await pool.getConnection();
-    const selectQuery = `SELECT id, user FROM ${table_name.handle_privilege}`;
+    const selectQuery = `SELECT id, user FROM ${table_name.handle_privilege} where flag=0`;
     const [rows] = await connection.query(selectQuery);
     connection.release();
 
@@ -107,6 +108,44 @@ app.get('/check-requests', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.get('/check-privilege', async (req, res) => {
+  const { user } = req.query;
+
+  try {
+    const connection = await pool.getConnection();
+    const selectQuery = `SELECT * FROM ${table_name.handle_privilege} WHERE user = ?`;
+    const [rows] = await connection.query(selectQuery, [user]);
+    connection.release();
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.delete('/clear-privilege', async (req, res) => {
+  const { user } = req.query;
+
+  try {
+    const connection = await pool.getConnection();
+    const deleteQuery = `DELETE FROM ${table_name.handle_privilege} WHERE user = ?`;
+    const [result] = await connection.query(deleteQuery, [user]);
+    connection.release();
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Privilege cleared successfully' });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
+
 
 // app.post('/approve-request', async (req, res) => {
 //   const { requestId } = req.body;
@@ -173,6 +212,7 @@ app.listen(3000,'0.0.0.0', () => {
 
 app.post('/check-account', async (req, res) => {
   const { user } = req.body;
+  console.log(user);
   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
   const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
   const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
@@ -203,6 +243,8 @@ app.post('/check-account', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
 // Account Elev Flags
 // 0 -> Requested
 // 1 -> Accepted 

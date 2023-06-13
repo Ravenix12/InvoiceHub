@@ -45,3 +45,7 @@ th {
 .requests>*{
   margin:5px;
 }
+
+.selected-button{
+  border:5px solid red;
+}

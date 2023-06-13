@@ -1,6 +1,5 @@
 document.getElementById("signup-form").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
-  
     // Get the form data
     const formData = new FormData(event.target);
     const name = formData.get("name");
@@ -13,7 +12,7 @@ document.getElementById("signup-form").addEventListener("submit", function(event
   });
 
   function Signup(name, password, email, userType) {
-    console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", userType);
+   
     const default_access = "guest";
   
     // Construct the request body
@@ -34,16 +33,19 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     })
       .then(response => {
         if (response.ok) {
-          console.log('Signup successful!');
 
+          console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", userType);
           // Handle the successful signup
   
           if (userType === "admin") {
             console.log("Calling elevatePrivilege")
             elevatePrivilege(name);
           }
+          window.location.href = 'http://localhost:3000';
+
+
         } else if (response.status === 409) {
-          console.error('Error occurred during signup: Duplicate entry');
+          alert("Error occurred during signup: Duplicate entry");
           // Handle the duplicate entry error
         } else {
           console.error('Error occurred during signup:', response.statusText);

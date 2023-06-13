@@ -2,9 +2,6 @@ const localData = JSON.parse(sessionStorage.getItem('localData'))[0];
 document.getElementById("deleteaccount").addEventListener('click',function(event){
     
     if(localData.mode=="guest"){
-    console.log("Please Login again to confirm account deletion");
-        const data = localData;
-        console.log('account check');
         fetch('/check-account', {
             method: 'POST',
             headers: {
@@ -58,7 +55,7 @@ const dangerZoneElement = document.createElement("div")
   dangerZoneElement.classList.add("dangerzone-elem")
 
 if (localData.mode=="admin") {
-  
+
   // Admin mode: render title requests under a bold and small heading tag
   const heading = document.createElement('h3');
   const boldText = document.createElement('b');
@@ -73,19 +70,61 @@ if (localData.mode=="admin") {
   requestsDiv.id = 'requests';
 
   // Append the heading and requests div to the dangerzone div
-
   dangerzoneDiv.appendChild(heading);
   dangerzoneDiv.appendChild(requestsDiv);
   checkRequests();
 } else {
+
+  fetch(`/check-privilege?user=${localData.user}`)
+  .then(response => response.json())
+  .then(data => {
+    // Handle the response data
+    
+    if (data.length!=0){
+      flag = data[0].flag;
+      const update = document.createElement("div");
+      if(flag==1){
+        console.log("Approved");
+        update.innerText = "You have been approved";
+      }
+      else if(flag==0){
+        console.log("No update yet");
+        update.innerText="No update yet";
+      }
+      else if(flag==-1){
+        console.log('Request Declined');    
+
+        update.innerText="You have been rejected";
+
+
+        fetch(`/clear-privilege?user=${localData.user}`, {
+          method: 'DELETE'
+        })
+          .then(response => response.json())
+          .then(data => {
+            // Handle the response data
+            console.log(data); // Output the response data to the console or perform further actions
+          })
+          .catch(error => {
+            // Handle any errors that occur during the request
+            console.error("Error:", error);
+          }); 
+      }
+      dangerZoneElement.appendChild(update);
+    }
+    else{
   // Not in admin mode: render a button to request admin access
   const button = document.createElement('button');
   button.textContent = "Request admin access";
   button.addEventListener('click', requestAdminAccess);
+   dangerZoneElement.appendChild(button);
+    }
+  })
+  .catch(error => {
+    // Handle any errors that occur during the request
+    console.error("Error:", error);
+  });  
 
-  // Append the button to the dangerzone div
-
-  dangerZoneElement.appendChild(button)
   dangerzoneDiv.appendChild(dangerZoneElement);
 }
 
@@ -134,6 +173,7 @@ function checkRequests() {
           approveButton.textContent = 'Approve';
           approveButton.value = 'accept'; // Set the value to 1
           approveButton.addEventListener('click', () => {
+            approveButton.classList.add("selected-button");
             respondRequest(request.user, approveButton.value); // Call respondRequest with the value
           });
 
@@ -141,6 +181,7 @@ function checkRequests() {
           declineButton.textContent = 'Decline';
           declineButton.value = 'decline'; // Set the value to 0
           declineButton.addEventListener('click', () => {
+            declineButton.classList.add("selected-button");
             respondRequest(request.user, declineButton.value); // Call respondRequest with the value
           });
 
@@ -189,26 +230,3 @@ function respondRequest(user, value) {
       console.error('An error occurred while sending request response:', error);
     });
 }
-
-
-// function approveRequest(requestId, row) {
-//   fetch('/approve-request', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ requestId })
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       if (data.success) {
-//         row.remove(); // Remove the row from the DOM if the request is successfully approved
-//       } else {
-//         console.error('Error occurred while approving request:', data.error);
-//       }
-//     })
-//     .catch(error => {
-//       console.error('Error occurred while approving request:', error);
-//     });
-// }
-
