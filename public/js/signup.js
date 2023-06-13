@@ -79,44 +79,6 @@ document.getElementById("signup-form").addEventListener("submit", function(event
       });
   }
 
-  // function Signup(name, password, email, userType) {
-  //   console.log("Validating signup with name:", name, "password:", password, "email:", email, "and userType:", userType);
-  //   const default_access = "guest";
-  
-  //   // Construct the request body
-  //   const requestBody = {
-  //     name: name,
-  //     password: password,
-  //     email: email,
-  //     userType: default_access
-  //   };
-  
-  //   // Make a POST request to the server-side method
-  //   fetch('/signup', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(requestBody)
-  //   })
-  //   .then(response => {
-  //     if (response.ok) {
-  //       console.log('Signup successful!');
-  //       // Handle the successful signup
-  //     } else if (response.status === 409) {
-  //       console.error('Error occurred during signup: Duplicate entry');
-  //       // Handle the duplicate entry error
-  //     } else {
-  //       console.error('Error occurred during signup:', response.statusText);
-  //       // Handle other errors
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('Error occurred during signup:', error);
-  //     // Handle the error as needed
-  //   });
-  // }
-  
   const passwordInput = document.getElementById("password");
   const passwordToggle = document.getElementById("password-toggle");
   
@@ -130,25 +92,3 @@ document.getElementById("signup-form").addEventListener("submit", function(event
     passwordToggle.textContent = "Show";
   });
   
-
-  // function login() {
-  //   const username = "dummy1";
-  //   const password = "dummypassword";
-  
-  //   fetch('/api/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({ username, password })
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => {
-  //       console.log(data)
-  //   })
-  //   .catch(error => console.error(error));
-  // }
-
-
-
-
