@@ -21,4 +21,4 @@ The Retail Invoice Management System is a comprehensive software solution design
 ### Commenting Guidelines 
 
 For functions include function name - Action Performed 
-ie console.log(arguements.callee.name+ "Action Performed" );
+ie console.log(functionName + "Action Performed" );
