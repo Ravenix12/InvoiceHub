@@ -18,3 +18,7 @@ The Retail Invoice Management System is a comprehensive software solution design
 >> Request Admin Access 
 
 
+### Commenting Guidelines 
+
+For functions include function name - Action Performed 
+ie console.log(arguements.callee.name+ "Action Performed" );

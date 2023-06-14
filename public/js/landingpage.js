@@ -1,6 +1,7 @@
 const localData = JSON.parse(sessionStorage.getItem('localData'))[0];
-document.getElementById("deleteaccount").addEventListener('click',function(event){
-    
+
+
+document.getElementById("deleteaccount").addEventListener('click',function(event){    
     if(localData.mode=="guest"){
         fetch('/check-account', {
             method: 'POST',
@@ -16,9 +17,7 @@ document.getElementById("deleteaccount").addEventListener('click',function(event
             throw new Error('Network response was not ok.');
           })
           .then((result) => {
-
             if (result.exists) {
-
               // Account exists in SQL table
               console.log('Account exists');
               window.location.replace("https://localhost:3000");
@@ -29,8 +28,7 @@ document.getElementById("deleteaccount").addEventListener('click',function(event
           })
           .catch((error) => {
             console.error('Error occurred during account check:', error);
-          });
-        
+          });   
     }
     else{
         alert("Website does not suppose admin account deletion currently ");
@@ -39,8 +37,8 @@ document.getElementById("deleteaccount").addEventListener('click',function(event
 
 
 fillTable();
-function fillTable() {
 
+function fillTable() {
     document.getElementById('id').textContent = localData.id;
     document.getElementById('user').textContent = localData.user;
     document.getElementById('password').textContent = localData.password;
@@ -48,11 +46,11 @@ function fillTable() {
     document.getElementById('email').textContent = localData.Email;
   }
 
-// Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
+  // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
 
 const dangerzoneDiv = document.getElementById('dangerzone');
 const dangerZoneElement = document.createElement("div")
-  dangerZoneElement.classList.add("dangerzone-elem")
+dangerZoneElement.classList.add("dangerzone-elem")
 
 if (localData.mode=="admin") {
 
@@ -78,7 +76,6 @@ if (localData.mode=="admin") {
   fetch(`/check-privilege?user=${localData.user}`)
   .then(response => response.json())
   .then(data => {
-    // Handle the response data
     
     if (data.length!=0){
       flag = data[0].flag;
@@ -202,7 +199,6 @@ function checkRequests() {
       console.error('Error occurred while checking requests:', error);
     });
 }
-
 
 function respondRequest(user, value) {
   const payload = {

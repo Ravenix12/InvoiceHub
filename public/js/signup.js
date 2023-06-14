@@ -12,7 +12,6 @@ document.getElementById("signup-form").addEventListener("submit", function(event
   });
 
   function Signup(name, password, email, userType) {
-   
     const default_access = "guest";
   
     // Construct the request body

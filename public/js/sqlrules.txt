@@ -8,3 +8,11 @@
     //   DELETE FROM users WHERE user = OLD.name;
     // END //
     // DELIMITER ;
+
+
+
+ALTER TABLE  account_elev
+ADD CONSTRAINT fk_TableA_TableB
+FOREIGN KEY (user)
+REFERENCES users (user)
+ON DELETE CASCADE;

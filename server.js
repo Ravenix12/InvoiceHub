@@ -1,10 +1,9 @@
-const multer = require('multer'); // For handling file uploads
 const express = require('express');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const app = express();
-const table_name ={ login:"users" ,main:"placeHolder",delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev"};
+const table_name ={ login:"users" ,delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev"};
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -15,6 +14,7 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 });
+
 pool.on('error', (err) => {
   console.error('Error in MySQL connection pool:', err);
 });
@@ -40,32 +40,6 @@ app.post('/api/index/login', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-// app.post('/check-account', async (req, res) => {
-//   const { user } = req.body;
-//   const checkQuery = `SELECT COUNT(*) AS count FROM ${table_name.delete_flag} WHERE name = ?`;
-//   const insertQuery = `INSERT INTO ${table_name.delete_flag} (name) VALUES (?)`;
-//   const deleteQuery = `DELETE FROM ${table_name.delete_flag} WHERE name = ?`;
-
-//   try {
-//     const connection = await pool.getConnection();
-//     const [rows] = await connection.query(checkQuery, [user]);
-//     const count = rows[0].count;
-//     if (count > 0) {
-//       console.log("Account exists and the record is deleted");
-//       await connection.query(deleteQuery, [user]);
-//   } else {
-//     // Account doesn't exist, add it to the SQL table
-//     console.log("Adding account to account_flag");
-//     await connection.query(insertQuery, [user]);
-//     res.status(200).json({ exists: false });
-//   }
-//     connection.release();
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
 
 app.post('/elevate-privilege', async (req, res) => {
   const { user } = req.body;
@@ -123,6 +97,7 @@ app.get('/check-privilege', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 app.delete('/clear-privilege', async (req, res) => {
   const { user } = req.query;
 
@@ -142,39 +117,6 @@ app.delete('/clear-privilege', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
-
-
-
-// app.post('/approve-request', async (req, res) => {
-//   const { requestId } = req.body;
-
-//   try {
-//     const connection = await pool.getConnection();
-
-//     // Retrieve the user from the elevate privileges table
-//     const selectQuery = `SELECT user FROM ${table_name.handle_privilege} WHERE id = ?`;
-//     const [rows] = await connection.query(selectQuery, [requestId]);
-//     const user = rows[0].user;
-
-//     // Update the main table and set the mode to 'admin' for the specific user
-//     const updateQuery = `UPDATE ${table_name.login} SET mode = 'admin' WHERE user = ?`;
-//     await connection.query(updateQuery, [user]);
-
-//     // Delete the request from the elevate privileges table
-//     const deleteQuery = `DELETE FROM ${table_name.handle_privilege} WHERE id = ?`;
-//     await connection.query(deleteQuery, [requestId]);
-
-//     connection.release();
-
-//     res.status(200).json({ success: true });
-//   } catch (error) {
-//     console.error("Error:", error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
 
 app.post('/signup', async (req, res) => {
   const { name, password, email, userType } = req.body;
@@ -243,7 +185,6 @@ app.post('/check-account', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 // Account Elev Flags
 // 0 -> Requested
