@@ -219,8 +219,6 @@ app.post('/check-account', async (req, res) => {
 // 0 -> Requested
 // 1 -> Accepted
 // -1 -> Declined
-
-
 app.post('/respond-request', async (req, res) => {
   /**
   * Handles the POST request to respond to a privilege elevation request.

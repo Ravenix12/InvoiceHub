@@ -4,6 +4,7 @@
   "description": "Project Description :  The Retail Invoice Management System is a comprehensive software solution designed to streamline and automate invoice data management in the retail industry. The system offers a set of powerful subsystems that enable efficient handling of invoices, data extraction, storage, search, analysis, and export. It simplifies the entire invoice processing workflow, from importing physical invoices to generating customized reports and integrating with other software applications.",
   "main": "index.js",
   "scripts": {
+    "devStart": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +20,11 @@
   "dependencies": {
     "dotenv": "^16.1.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
