@@ -1,0 +1,185 @@
+
+/* style for the main body */
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* styles for the side menu */
+
+.sidebar {
+    width: clamp(250px, 20vw, 500px);
+    background-color: #033246;
+    height: 100vh;
+    position: fixed;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin-top: 20px;
+    margin: 0;
+    padding: 10px;
+}
+
+.sidebar li {
+    align-items: center;
+    display: flex;
+}
+
+
+.title {
+    padding: 10px;
+    font-size: 30px;
+}
+
+/* styles for link in the side bar */
+
+.sidebar a {
+    color: #D3D4CD;
+    text-decoration: none;
+}
+
+.sidebar a:active {
+    color: #E4E4E4;
+}
+
+/* styles for personal info section */
+
+.profile {
+    padding: 10px;
+    margin-top: 20px;
+    color: #D3D4CD;
+    display: flex;
+    align-items: center;
+}
+
+.profile_pic{
+    width: 70px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.personal_info {
+    
+    margin-left: 20px;
+}
+
+.name {
+    font-size: 25px;
+    font-style: bold;
+}
+
+.btn_edit_profile {
+    /* maybe can replace with an icon and put at the right top */
+    font-size: 10px;
+    margin-top: 10px;
+    padding-right: 10px;
+    /* padding-left: 10px; */
+    /* border: 1px solid #D3D4CD; */
+    background-color: #033246;
+    color:#D3D4CD;
+}
+
+.btn_edit_profile:hover {
+    background-color: #2D5261;
+    color:#D3D4CD;
+}
+
+/* style for navigation on the side bar */
+
+.navigation{
+    margin-top: 30px;
+}
+
+.home{
+    width: 220px;
+    padding: 10px;
+}
+
+.home:hover{
+    background-color: #2D5261;
+}
+
+.ic_home{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+.invoice{
+    width: 220px;
+    padding: 10px;
+}
+
+.invoice:hover{
+    background-color: #2D5261;
+}
+
+.ic_invoice{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+.soa{
+    width: 220px;
+    padding: 10px;
+}
+
+.soa:hover{
+    background-color: #2D5261;
+}
+
+.ic_soa{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+.supplier{
+    width: 220px;
+    padding: 10px;
+}
+
+.supplier:hover{
+    background-color: #2D5261;
+}
+
+.ic_supplier{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+.payment{
+    width: 220px;
+    padding: 10px;
+}
+
+.payment:hover{
+    background-color: #2D5261;
+}
+
+.ic_payment{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+.setting{
+    width: 220px;
+    padding: 10px;
+}
+
+.setting:hover{
+    background-color: #2D5261;
+}
+
+.ic_setting{
+    color:#D3D4CD;
+    margin-right: 10px;
+}
+
+
+/* style for the main content */
+
+.content {
+    margin-left: clamp(250px, 20vw, 500px);
+    padding: 20px;
+}
