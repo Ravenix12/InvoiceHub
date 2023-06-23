@@ -2,6 +2,7 @@
 /* style for the main body */
 
 body {
+    display: flex;
     margin: 0;
     padding: 0;
 }
@@ -9,7 +10,10 @@ body {
 /* styles for the side menu */
 
 .sidebar {
-    width: clamp(250px, 20vw, 500px);
+    width: 30%;
+    min-width: 250px;
+    /* max-width: 400px; */
+
     background-color: #033246;
     height: 100vh;
     position: fixed;
@@ -20,9 +24,11 @@ body {
     margin-top: 20px;
     margin: 0;
     padding: 10px;
+    
 }
 
 .sidebar li {
+    width: 100%;
     align-items: center;
     display: flex;
 }
@@ -47,6 +53,7 @@ body {
 /* styles for personal info section */
 
 .profile {
+    width: 100%;
     padding: 10px;
     margin-top: 20px;
     color: #D3D4CD;
@@ -93,7 +100,7 @@ body {
 }
 
 .home{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -107,7 +114,7 @@ body {
 }
 
 .invoice{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -121,7 +128,7 @@ body {
 }
 
 .soa{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -135,7 +142,7 @@ body {
 }
 
 .supplier{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -149,7 +156,7 @@ body {
 }
 
 .payment{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -163,7 +170,7 @@ body {
 }
 
 .setting{
-    width: 220px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -180,6 +187,7 @@ body {
 /* style for the main content */
 
 .content {
-    margin-left: clamp(250px, 20vw, 500px);
+    width:70%;
+    margin-left: max(250px, 30%);
     padding: 20px;
 }
