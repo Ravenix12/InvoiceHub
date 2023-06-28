@@ -1,4 +1,3 @@
-
 document.getElementById("login-form").addEventListener("submit", function(event) {
   /**
   * Event listener attached to the login form submit event.
@@ -16,7 +15,6 @@ document.getElementById("login-form").addEventListener("submit", function(event)
   validateLogin(username, password);
 });
 
-
 function validateLogin(username, password) {
   /**
   * Function to validate the login credentials by making a POST request to the server-side login endpoint.
@@ -26,7 +24,7 @@ function validateLogin(username, password) {
   * @param {string} username - The entered username for login validation.
   * @param {string} password - The entered password for login validation.
   */
-  fetch('/api/index/login', {
+  fetch('/account/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

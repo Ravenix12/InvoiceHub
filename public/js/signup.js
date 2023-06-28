@@ -35,7 +35,7 @@ function Signup(name, password, email, userType) {
   };
 
   // Make a POST request to the server-side method
-  fetch('/signup', {
+  fetch('/account/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -81,7 +81,7 @@ function elevatePrivilege(user) {
     user: user
   };
 
-  fetch('/elevate-privilege', {
+  fetch('/acccount/elevate-privilege', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

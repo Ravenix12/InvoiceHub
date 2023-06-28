@@ -1,10 +1,8 @@
-
 const localData = JSON.parse(sessionStorage.getItem('localData'))[0];
-
 
 document.getElementById("deleteaccount").addEventListener('click',function(event){    
     if(localData.mode=="guest"){
-        fetch('/check-account', {
+        fetch('/account/check-account', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -74,7 +72,7 @@ if (localData.mode == "admin") {
   checkRequests();
 } else {
   // Check the user's privilege level
-  fetch(`/check-privilege?user=${localData.user}`)
+  fetch(`/account/check-privilege?user=${localData.user}`)
     .then(response => response.json())
     .then(data => {
       if (data.length != 0) {
@@ -95,7 +93,7 @@ if (localData.mode == "admin") {
           update.innerText = "You have been rejected";
 
           // Clear the privilege for the user
-          fetch(`/clear-privilege?user=${localData.user}`, {
+          fetch(`/account/clear-privilege?user=${localData.user}`, {
             method: 'DELETE'
           })
             .then(response => response.json())
@@ -140,7 +138,7 @@ function requestAdminAccess() {
   const user = `${localData.user}`; // Replace 'admin' with the actual user requesting admin access
 
   // Send a POST request to elevate-privilege endpoint with the user data
-  fetch('/elevate-privilege', {
+  fetch('/account/elevate-privilege', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -170,7 +168,7 @@ function checkRequests() {
   * If there are no requests, it displays a message indicating that no requests were found.
   */
   // Fetch requests from the server
-  fetch('/check-requests')
+  fetch('/account/check-requests')
     .then(response => response.json())
     .then(data => {
       // Get the container element for requests
@@ -244,7 +242,6 @@ function checkRequests() {
 function respondRequest(user, value) {
   /**
   * Sends a request response to the server.
-  *
   * @param {string} user - The user associated with the request.
   * @param {string} value - The action value for the request.
   */
@@ -258,7 +255,7 @@ function respondRequest(user, value) {
   console.log(payload);
 
   // Send the payload to the server using fetch API
-  fetch('/respond-request', {
+  fetch('/account/respond-request', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -289,7 +286,7 @@ fileInput.addEventListener('change', event => {
 
 function detectText(formData) {
   // Send the image data to the back-end using fetch API
-  fetch('/upload-jpeg', {
+  fetch('/rekognition/upload-jpeg', {
     method: 'POST',
     body: formData
   })
@@ -301,3 +298,7 @@ function detectText(formData) {
     console.error('Error uploading file:', error);
   });
 }
+
+const dummy = document.getElementById('dummy').addEventListener('click',()=>{
+  fetch('/check/dummy').then(response=>response.json()).then(data=>{console.log(data);}).catch(error=>{console.error("error occured",error);});
+})
