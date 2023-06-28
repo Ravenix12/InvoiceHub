@@ -279,165 +279,25 @@ function respondRequest(user, value) {
     });
 }
 
-
-// Testing out aws stuf
-
-// function uploadPDF(file) {
-//   if (!file) {
-//     console.error('No file selected.');
-//     return;
-//   }
-
-//   // Create a new FormData instance
-//   const formData = new FormData();
-//   // Append the file to the FormData object
-//   formData.append('png', file);
-//   console.log(formData.get('png'));
-//   // convertPDFToJPEG(formData)
-//   // .then(convertedFormData => {
-
-//   // })
-
-//   // .catch(error => {
-//   //   console.error('Error:', error);
-//   // });
-//   fetch('/upload-image', {
-//     method: 'POST',
-//     body: formData
-//   })
-//     .then(response => {
-//       if (response.ok) {
-//         // Handle successful response
-//         console.log('PDF uploaded successfully.');
-//       } else {
-//         // Handle error response
-//         console.error('Failed to upload PDF.');
-//       }
-//     })
-//     .catch(error => {
-//       console.error('An error occurred while uploading PDF:', error);
-//     });
-//   // Send the FormData object to the backend using fetch API
-
-// }
-
-
-// const fileInput = document.getElementById('aws-call');
-// fileInput.addEventListener('change', event => {
-//   const file = event.target.files[0];
-//   console.log(file);
-//   uploadPDF(file);
-// });
-
-
-
-
-
-// function convertPDFToJPEG(formData) {
-//   return new Promise((resolve, reject) => {
-//     const fileInput = formData.get('pdf');
-
-//     if (!fileInput) {
-//       reject(new Error('No file selected.'));
-//       return;
-//     }
-
-//     const fileReader = new FileReader();
-
-//     fileReader.onload = function(event) {
-//       const typedArray = new Uint8Array(event.target.result);
-//       convertToJPEG(typedArray)
-//         .then(jpegData => {
-//           formData.delete('pdf'); // Remove the original PDF from the formData
-//           formData.append('jpeg', jpegData, 'converted.jpeg'); // Append the converted JPEG to the formData
-//           resolve(formData);
-//         })
-//         .catch(error => {
-//           reject(error);
-//         });
-//     };
-
-//     fileReader.onerror = function(event) {
-//       reject(new Error('Failed to read the file.'));
-//     };
-
-//     fileReader.readAsArrayBuffer(fileInput);
-//   });
-// }
-
-// function convertToJPEG(fileData) {
-//   return new Promise((resolve, reject) => {
-//     pdfjsLib.getDocument(fileData).promise.then(function(pdf) {
-//       const pageCount = pdf.numPages;
-//       const canvas = document.createElement('canvas');
-//       const context = canvas.getContext('2d');
-//       const convertedImages = [];
-
-//       let convertedCount = 0;
-
-//       for (let pageNum = 1; pageNum <= pageCount; pageNum++) {
-//         pdf.getPage(pageNum).then(function(page) {
-//           const viewport = page.getViewport({ scale: 1.0 });
-//           canvas.width = viewport.width;
-//           canvas.height = viewport.height;
-
-//           const renderContext = {
-//             canvasContext: context,
-//             viewport: viewport
-//           };
-
-//           page.render(renderContext).promise.then(function() {
-//             canvas.toBlob(function(blob) {
-//               convertedImages.push(blob);
-//               convertedCount++;
-
-//               if (convertedCount === pageCount) {
-//                 resolve(convertedImages);
-//               }
-//             }, 'image/jpeg');
-//           });
-//         });
-//       }
-//     }).catch(function(error) {
-//       reject(new Error('Failed to convert PDF to JPEG.'));
-//     });
-//   });
-// }
-
-
-// HTML file:
-// <input type="file" id="imageFile">
-
 const fileInput = document.getElementById('aws-call');
 fileInput.addEventListener('change', event => {
   const file = event.target.files[0];
-  const reader = new FileReader();
-  reader.onload = function() {
-    const imageData = reader.result;
-    detectText(imageData);
-  }
-  reader.readAsDataURL(file);
+  const formData = new FormData();
+  formData.append('jpeg', file);
+  detectText(formData);
 });
 
-function detectText(imageData) {
+function detectText(formData) {
   // Send the image data to the back-end using fetch API
-  fetch('/detect-text', {
+  fetch('/upload-jpeg', {
     method: 'POST',
-    body: JSON.stringify({ imageData }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    body: formData
   })
-    .then(response => response.json())
-    .then(data => {
-      // Process the response
-      data.textDetections.forEach(textDetection => {
-        const detectedText = textDetection.detectedText;
-        const confidence = textDetection.confidence;
-        console.log(`Detected Text: ${detectedText}, Confidence: ${confidence}`);
-      });
-    })
-    .catch(error => {
-      console.error('An error occurred while detecting text:', error);
-    });
+  .then(response => response.json())
+  .then(data => {
+    console.log('File uploaded successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error uploading file:', error);
+  });
 }

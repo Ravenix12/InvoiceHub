@@ -257,26 +257,13 @@ app.post('/respond-request', async (req, res) => {
   }
 });
 
+const accessKeyId = process.env.AWS_accessKeyId;
+const secretAccessKey = process.env.AWS_secretAccessKey;
+const region = process.env.AWS_region;
 
+const { Rekognition } = require('@aws-sdk/client-rekognition');
 
-// Start the server
-const port = 8000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-
-
-const { RekognitionClient, DetectTextCommand } = require("@aws-sdk/client-rekognition");
-
-const fs = require("fs");
-
-// Configure AWS credentials
-const accessKeyId = 'AKIAQ2N7GDZTUR4GKLOL';
-const secretAccessKey = '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';
-const region = 'ap-southeast-1';
-
-const rekognitionClient = new RekognitionClient({
+const rekognitionClient = new Rekognition({
   region,
   credentials: {
     accessKeyId,
@@ -284,61 +271,31 @@ const rekognitionClient = new RekognitionClient({
   }
 });
 
-// app.post('/upload-pdf', async (req, res) => {
-
-
-//   try {
-//     // Detect text in the PDF file
-//     const params = {
-//       Document: {
-//         Bytes: pdfStream
-//       }
-//     };
-
-//     const command = new DetectTextCommand(params);
-//     const response = await rekognitionClient.send(command);
-
-//     // Process the response
-//     const textDetections = response.Blocks.filter(block => block.BlockType === 'WORD');
-//     const detectedTexts = textDetections.map(textDetection => textDetection.Text);
-
-//     console.log('Detected Texts:', detectedTexts);
-//     res.sendStatus(200);
-//   } catch (err) {
-//     console.error('Error:', err);
-//     res.sendStatus(500);
-//   }
-// });
 const multer = require('multer');
-const upload = multer().single('png');
-const { AWS } = require('@aws-sdk/client-rekognition');
+const upload = multer().single('jpeg');
 
-app.post('/upload-pdf', (req, res) => {
+app.post('/upload-jpeg', (req, res) => {
   upload(req, res, async (err) => {
     if (err) {
       console.error('Error:', err);
       return res.sendStatus(500);
     }
-
-    const pdfFile = req.file;
-    // Access the PDF file data
-    const pdfData = req.file.buffer;
-
+    const jpegData = req.file.buffer;
+    console.log("JpegData:", jpegData);
+    
     try {
-      // Detect text in the PDF file
       const params = {
-        Document: {
-          Bytes: pdfData
+        Image: {
+          Bytes: jpegData
         }
       };
-
-      const command = new DetectTextCommand(params);
-      const response = await rekognitionClient.send(command);
-
+  
+      const response = await rekognitionClient.detectText(params);
+  
       // Process the response
-      const textDetections = response.Blocks.filter(block => block.BlockType === 'WORD');
-      const detectedTexts = textDetections.map(textDetection => textDetection.Text);
-
+      const textDetections = response.TextDetections.filter(detection => detection.Type === 'WORD');
+      const detectedTexts = textDetections.map(detection => detection.DetectedText);
+      console.log(textDetections);
       console.log('Detected Texts:', detectedTexts);
       res.sendStatus(200);
     } catch (err) {
@@ -349,93 +306,9 @@ app.post('/upload-pdf', (req, res) => {
 });
 
 
-// app.post('/upload-image', upload.single('image'), async (req, res) => {
-//   try {
-//     const imageFile = req.file;
-//     const imageData = imageFile.buffer;
+// Start the server
+const port = 8000;
 
-//     const params = {
-//       Image: {
-//         Bytes: imageData,
-//       },
-//     };
-
-//     const command = new DetectTextCommand(params);
-//     const response = await rekognitionClient.send(command);
-
-//     const textDetections = response.TextDetections;
-//     const detectedTexts = textDetections.map(textDetection => textDetection.DetectedText);
-
-//     console.log('Detected Texts:', detectedTexts);
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.sendStatus(500);
-//   }
-// });
-// app.post('/upload-image', async (req, res) => {
-//   try {
-//     const imageFile = req.files.formData;
-//     const imageData = imageFile.data;
-
-//     const params = {
-//       Image: {
-//         Bytes: imageData,
-//       },
-//     };
-
-//     const command = new DetectTextCommand(params);
-//     const response = await rekognitionClient.send(command);
-
-//     const textDetections = response.TextDetections;
-//     const detectedTexts = textDetections.map(textDetection => textDetection.DetectedText);
-
-//     console.log('Detected Texts:', detectedTexts);
-//     res.sendStatus(200);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.sendStatus(500);
-//   }
-// });
-
-// Configure AWS credentials
-
-// Create a Rekognition client
-
-
-app.post('/detect-text', (req, res) => {
-  const imageData = req.body.imageData;
-
-  // Convert base64-encoded image data to Buffer
-  const imageBuffer = Buffer.from(imageData.split(',')[1], 'base64');
-
-  // Detect text in the image
-  const params = {
-    Image: {
-      Bytes: imageBuffer
-    }
-  };
-
-  rekognitionClient.detectText(params, (err, data) => {
-    if (err) {
-      console.error('Error:', err);
-      return res.status(500).json({ error: 'An error occurred while detecting text' });
-    }
-
-    // Process the response
-    const textDetections = data.TextDetections.map(textDetection => {
-      return {
-        detectedText: textDetection.DetectedText,
-        confidence: textDetection.Confidence
-      };
-    });
-
-    res.json({ textDetections });
-  });
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
-});
-
-
