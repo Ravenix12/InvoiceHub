@@ -5,6 +5,7 @@ body {
     display: flex;
     margin: 0;
     padding: 0;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 /* styles for the side menu */
@@ -190,4 +191,5 @@ body {
     width:70%;
     margin-left: max(250px, 30%);
     padding: 20px;
+    /* font-family: 'Lora', serif; */
 }
