@@ -15,7 +15,7 @@ const rekognitionClient = new Rekognition({
     secretAccessKey
   }
 });
-
+const AWS = require('aws-sdk');
 const multer = require('multer');
 const upload = multer().single('jpeg');
 
@@ -48,6 +48,61 @@ router.post('/upload-jpeg', (req, res) => {
     }
   });
 });
+
+
+// Create an S3 client
+const s3 = new AWS.S3({
+  accessKeyId: accessKeyId,
+  secretAccessKey: secretAccessKey,
+  region: region
+});
+
+router.post('/upload-jpeg-bucket', (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      console.error('Error:', err);
+      return res.sendStatus(500);
+    }
+
+    const jpegData = req.file.buffer;
+    console.log("JpegData:", jpegData);
+
+    try {
+      // Upload the image to S3 bucket
+      const uploadParams = {
+        Bucket: 'imagebucket1234', // Replace with your bucket name
+        Key: 'image.jpg', // Specify the desired key for the uploaded image
+        Body: jpegData
+      };
+
+      const uploadResult = await s3.upload(uploadParams).promise();
+      console.log('Image uploaded to S3:', uploadResult.Location);
+
+      // Use the uploaded image for text detection with AWS Rekognition
+      const rekognitionParams = {
+        Image: {
+          S3Object: {
+            Bucket: 'imagebucket1234', // Replace with your bucket name
+            Name: 'image.jpg' // Specify the key of the uploaded image
+          }
+        }
+      };
+      const rekognitionResponse = await rekognitionClient.detectText(rekognitionParams);
+      // Process the response
+      const textDetections = rekognitionResponse.TextDetections.filter(detection => detection.Type === 'WORD');
+      const detectedTexts = textDetections.map(detection => detection.DetectedText);
+      console.log('Detected Texts:', detectedTexts);
+      res.sendStatus(200);
+    } catch (err) {
+      console.error('Error:', err);
+      res.sendStatus(500);
+    }
+  });
+});
+
+
+
+
 
 
 // Export the router

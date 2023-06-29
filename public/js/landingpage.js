@@ -281,8 +281,15 @@ fileInput.addEventListener('change', event => {
   const file = event.target.files[0];
   const formData = new FormData();
   formData.append('jpeg', file);
-  detectText(formData);
-});
+  const fileSizeInMB = file.size / (1024*1024);
+  console.log('File Size:',fileSizeInMB.toFixed(2), 'MB');
+  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
+    detectTextBuckets(formData);
+  }
+  else{
+    detectText(formData);
+  }
+}); 
 
 function detectText(formData) {
   // Send the image data to the back-end using fetch API
@@ -299,6 +306,19 @@ function detectText(formData) {
   });
 }
 
-const dummy = document.getElementById('dummy').addEventListener('click',()=>{
-  fetch('/check/dummy').then(response=>response.json()).then(data=>{console.log(data);}).catch(error=>{console.error("error occured",error);});
-})
+function detectTextBuckets(formData) {
+  // Send the image data to the back-end using fetch API
+  fetch('/rekognition/upload-jpeg-bucket', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('File uploaded successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error uploading file:', error);
+  });
+}
+
+
