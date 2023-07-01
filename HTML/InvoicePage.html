@@ -3,11 +3,11 @@
 <head>
     <title>Invoice Hub</title>
     <link rel="stylesheet" type ="text/css" href="Template.css">
-    <link rel="stylesheet" type ="text/css" href="HomePage.css">
+    <link rel="stylesheet" type ="text/css" href="InvoicePage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
-
+    <script src="InvoiceHub/JS/InvoicePage.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -94,97 +94,100 @@
     </div>
     
     
+    
     <div class="content">
 
-        <!-- contents at top -->
         <div class="content_top">
+            <!-- invoice page title -->
+            <div class="invoice_title">INVOICES</div>
 
-            <div class="content_top_left">
-                <!-- box for the top summary -->
-                <div class="summary">
-                    <div class ="total_outstanding">
-                        <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
-                        <span class="total_outstanding_cost"><br>S$ 39,225</span>
-                    </div>
-                    <div class ="overdue">
-                        <span class="overdue_title">OVERDUE</span>
-                        <span class="overdue_cost"><br>S$ 9,225</span>
-                    </div>
-                    <div class ="due">
-                        <span class="due_title">DUE</span>
-                        <span class="due_cost"><br>S$ 25</span>
-                    </div>
+            <!-- box for the top summary -->
+            <div class="summary">
+                <div class ="total_outstanding">
+                    <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
+                    <span class="total_outstanding_cost"><br>S$ 39,225</span>
                 </div>
-    
-                <!-- box for the uploading documents -->
-                <div class="upload">
-                    <div class="box_upload">
-                        <div class ="upload_invoice">
-                            <span class="total_outstanding_title">Inovice</span>
-                            <a class="ic_upload" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class ="upload_soa">
-                            <span class="overdue_title">State of Accounts</span>
-                            <a class="ic_upload" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class ="upload_credit_note">
-                            <span class="due_title">Credit Note</span>
-                            <a class="ic_upload" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+                <div class ="overdue">
+                    <span class="overdue_title">OVERDUE</span>
+                    <span class="overdue_cost"><br>S$ 9,225</span>
                 </div>
-            </div>
-    
-            <!-- box for overdue since stat -->
-            <div class="overdue_stat">
-                <div class="overdue_title">OVERDUE SINCE</div>
-    
-            </div>
-    
-            <!-- box for sales and collections -->
-            <div class="sales_collections">
-                <div class="sc_title">SALES & COLLECTIONS</div>
-                <div class="sc_details">
-                    <div class ="sc_issue_date">
-                        <span class="sc_issue_date_title">FOR INVOICES ISSUED IN</span>
-                        <span class="total_outstanding_cost"><br>FEB 23</span>
-                    </div>
-                    <div class ="sc_billed">
-                        <span class="sc_billed_title">BILLED</span>
-                        <span class="sc_billed_num"><br>5,432</span>
-                    </div>
-                    <div class ="sc_collected">
-                        <span class="sc_collected_title">COLLECTED</span>
-                        <span class="sc_collected_num"><br>5,432</span>
-                    </div>
-                    <div class ="sc_outstanding">
-                        <span class="sc_outstanding_title">OUTSTANDING</span>
-                        <span class="sc_outstanding_num"><br>5,432</span>
-                    </div>
+                <div class ="due">
+                    <span class="due_title">DUE</span>
+                    <span class="due_cost"><br>S$ 25</span>
                 </div>
             </div>
         </div>
-
         
-        <!-- box for the stat summary -->
-        <div class="stat">
-            <div class="stat_title">Daily Statistics</div>
+        <div class="invoice_navigation">
+            <div class="inv_types">
+                <div class="inv_nav_all">ALL</div>
+                <div class="inv_nav_draft">DRAFT</div>
+                <div class="inv_nav_overdue">OVERDUE</div>
+                <div class="inv_nav_paid">PAID</div>
+            </div>
+            <div class="search_filter">
+                <div class="box_search">
+                    <div class="search_hint">Search for invoices</div>
+                    <svg class="ic_search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <div class="btn_filter">
+                    <div class="filter_hint">Sort / Filter</div>
+                    <svg class="ic_filter" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"/>
+                    </svg>
+                </div>
+            </div>
         </div>
+
+        <div class="invoice_table_container">
+            <table class="invoice_table">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>CUSTOMER NAME</th>
+                        <th>INVOICE DATE</th>
+                        <th>AMOUNT</th>
+                        <th>STATUS</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1011</td>
+                        <td>Floppy Pte Ltd</td>
+                        <td>June 10, 2023</td>
+                        <td>$S 853.23</td>
+                        <td>PAID</td>
+                        <td>
+                            <svg class="ic_delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                            </svg>
+                            <svg class="ic_more" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1012</td>
+                        <td>Piong Cha Ptd Ltd</td>
+                        <td>June 3, 2023</td>
+                        <td>$S 1267.41</td>
+                        <td>PAID</td>
+                        <td>
+                            <svg class="ic_delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                            </svg>
+                            <svg class="ic_more" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            </svg>
+                        </td>
+                    </tr>
+              </tbody>
+            </table>
+          </div>
+        
     </div>
 </body>
 </html>
