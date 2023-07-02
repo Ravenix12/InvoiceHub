@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
-    <script src="InvoiceHub/JS/InvoicePage.js"></script>
 </head>
 <body>
     <div class="sidebar">
@@ -119,15 +118,17 @@
         </div>
         
         <div class="invoice_navigation">
-            <div class="inv_types">
-                <div class="inv_nav_all">ALL</div>
-                <div class="inv_nav_draft">DRAFT</div>
-                <div class="inv_nav_overdue">OVERDUE</div>
-                <div class="inv_nav_paid">PAID</div>
-            </div>
+            <div class="inv_nav_list">INVOICE LIST</div>
             <div class="search_filter">
                 <div class="box_search">
-                    <div class="search_hint">Search for invoices</div>
+                    <select class="search_type" id="search_type">
+                        <option value="id">ID</option>
+                        <option value="name">CUSTOMER NAME</option>
+                        <option value="date">INVOICE DATE</option>
+                        <option value="amount">AMOUNT</option>
+                        <option value="status">STATUS</option>
+                      </select>
+                    <input id="inp_search_blank" type="text" placeholder="Search for invoices"></input>
                     <svg class="ic_search" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg>
@@ -142,52 +143,9 @@
         </div>
 
         <div class="invoice_table_container">
-            <table class="invoice_table">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>CUSTOMER NAME</th>
-                        <th>INVOICE DATE</th>
-                        <th>AMOUNT</th>
-                        <th>STATUS</th>
-                        <th>ACTION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1011</td>
-                        <td>Floppy Pte Ltd</td>
-                        <td>June 10, 2023</td>
-                        <td>$S 853.23</td>
-                        <td>PAID</td>
-                        <td>
-                            <svg class="ic_delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                            </svg>
-                            <svg class="ic_more" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1012</td>
-                        <td>Piong Cha Ptd Ltd</td>
-                        <td>June 3, 2023</td>
-                        <td>$S 1267.41</td>
-                        <td>PAID</td>
-                        <td>
-                            <svg class="ic_delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                            </svg>
-                            <svg class="ic_more" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            </svg>
-                        </td>
-                    </tr>
-              </tbody>
-            </table>
-          </div>
-        
+            <table id="invoice_table" class="invoice_table"></table>
+        </div>
+        <script src="JS/InvoicePage.js" type="module"></script>
     </div>
 </body>
 </html>

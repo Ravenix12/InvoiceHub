@@ -37,8 +37,6 @@
 /* style for summary content */
 
 .summary{
-    /* min-width: 350px;
-    max-width: 500px; */
 
     display: flex;
     gap: 30px;
@@ -95,22 +93,15 @@
 
 /* styles for invoice types navigation */
 
-.inv_types{
+.inv_nav_list{
     display: flex;
     gap: 50px;
     align-items: flex-end;
 
-    order: 1;
-
-    color: #D3D4CD;
-}
-
-.inv_nav_all, .inv_nav_draft, .inv_nav_overdue, .inv_nav_paid{
-    margin-left: 10px;
-}
-
-.inv_nav_all{
+    font-size: 20px;
     color: #033246;
+
+    order: 1;
 }
 
 .inv_nav_draft, .inv_nav_overdue, .inv_nav_paid{
@@ -132,6 +123,7 @@
 }
 
 /* style for serach box */
+
 .box_search{
     display: flex;
     align-items: center;
@@ -145,12 +137,19 @@
     border-radius: 10px;
 }
 
+.search_type{
+    margin-right: 10px;
+    border: none;
+}
+
 .ic_search{
     margin-left: 5px;
 }
 
-.search_hint{
+input[type="text"]{
+    font-size: 17px;
     margin-right: 5px;
+    border: none;
 }
 
 /* style for filtering */
@@ -198,6 +197,7 @@
 }
 
 .invoice_table th{
+    color: white;
     padding-left: 10px;
     padding-right: 10px;
     padding:5px;
@@ -215,12 +215,16 @@
 
 .invoice_table td:nth-child(1) {
     color: #033246;
-  }
-
-.invoice_table td:nth-child(5) {
-  background-color: rgb(136, 197, 136);
 }
 
 .invoice_table td:nth-child(6) {
     justify-content: space-between;
+}
+
+.ic_delete{
+    color:#033246;
+}
+
+.ic_more{
+    color: #033246;
 }
