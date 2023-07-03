@@ -92,13 +92,13 @@
         </table>
 
         <script>
-            //load data
+            //load data from localStorage
             document.getElementById("Data Table").innerHTML = localStorage.getItem("Data Table");
             document.getElementById("Data Table").style.textAlign = "center";//center-aligns text
         </script>
 
         <script>
-            //Count number of reminders and alerts user
+            //Count number of reminders and alerts of them
             var table = document.getElementById("Data Table");
             var row = document.getElementById("Data Table").getElementsByTagName("tr");
             var length = row.length - 1;
@@ -121,12 +121,14 @@
 
         <script type="text/javascript">
             function AddReminder() {
+                //Creates new table row at the bottom of the table
                 var table = document.getElementById("Data Table");
                 table.style.textAlign = "center";//center align text
 
                 var table = document.getElementById("Data Table");
                 var newRow = table.insertRow(table.rows.length);
 
+                //Creates table cell and sets the default value to "NEW CELL" to be modified by the user
                 var cell1 = newRow.insertCell(0);//add new cells
                 cell1.innerHTML = "NEW CELL";
 
@@ -150,7 +152,7 @@
         <script type="text/javascript">
 
             function DeleteReminder() {
-                //get number of rows
+                //iterates every row in table (except the first), checks the status of the checkbox in each table row, and removes the table row if the checkbox is checked
                 var table = document.getElementById("Data Table");
                 var length = table.rows.length - 1;
                 if (length == 0) {
@@ -184,6 +186,8 @@
                 var arr = [];
                 var table = document.getElementById("Data Table");
                 var length = table.rows.length - 1;
+                //For-loop to iterate through every table cell, extracts the value in the table cell and stores the value in an array
+                //After all the table cells have been visited, the array is stored in localStorage
                 for (let i = 1; i <= length; i++) {
                     var supplier = table.rows[i].cells[0].innerHTML;
                     var InVoiceNo = table.rows[i].cells[1].innerHTML;
