@@ -19,5 +19,6 @@ The Retail Invoice Management System is a comprehensive software solution design
 
 The notifications and reminders system allows users to create and modify reminders on upcoming payments to be made. 
 
-**Searching localStorage and extracting information to create custom reminders**
+##Searching localStorage and extracting information to create custom reminders
+
 After logging in, the Notifications system searches localStorage and extracts all the information stored. It then iterates through every element, extracts the outstanding amount, currency, and supplier from each table, creates a formatted string with the extracted information which is then shown as a push notification. 
