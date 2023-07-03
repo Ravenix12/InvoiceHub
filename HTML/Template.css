@@ -8,6 +8,20 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
+a {
+    text-decoration: none; 
+    color: inherit;
+  }
+  
+  a:visited {
+    color: inherit;
+  }
+  
+  a:focus,
+  a:active {
+    outline: none; 
+  }
+
 /* styles for the side menu */
 
 .sidebar {

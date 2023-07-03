@@ -154,7 +154,7 @@ input[type="text"]{
 
 /* style for sorting */
 
-.btn_sort{
+.box_sort{
     display: flex;
     align-items: center;
 
@@ -272,6 +272,14 @@ input[type="text"]{
     color:#033246;
 }
 
+.ic_delete:hover{
+    cursor: pointer;
+}
+
 .ic_more{
+    color: #033246;
+}
+
+.ic_edit{
     color: #033246;
 }
