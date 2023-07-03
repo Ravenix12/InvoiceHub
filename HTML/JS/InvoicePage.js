@@ -1,3 +1,5 @@
+/* CODE FOR RENDERING THE TABLE */
+
 // data from InvoiceData.js
 import { data } from './InvoiceData.js';
 
@@ -20,7 +22,7 @@ function showtable(data_arr) {
   // get the icons for delete and more
   for (var i = 0; i < data_arr.length; i++) {
     var deleteIcon = `
-      <svg class="ic_delete" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+    <svg class="ic_delete" data-id="${data_arr[i].id}" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
       </svg>`;
 
@@ -54,19 +56,28 @@ function showtable(data_arr) {
         <td>${deleteIcon} ${moreIcon}</td>
       </tr>`;
   }
+
   // Add event listener for delete icon using event delegation
   table.addEventListener("click", function (event) {
     if (event.target.classList.contains("ic_delete")) {
-      // Retrieve the row index by finding the parent row element
-      var rowIndex = event.target.closest("tr").rowIndex - 1;
-
+      // Retrieve the id of the row from the custom attribute
+      var rowId = event.target.getAttribute("data-id");
+  
+      // Find the index of the row with the matching id in the data_arr array
+      var rowIndex = data_arr.findIndex(function (row) {
+        return row.id === rowId;
+      });
+  
       // Remove the corresponding row from the data_arr array
-      data_arr.splice(rowIndex, 1);
-
+      if (rowIndex > -1) {
+        data_arr.splice(rowIndex, 1);
+      }
+  
       // Re-render the table with updated data
       showtable(data_arr);
     }
   });
+ 
 }
 
 
@@ -78,7 +89,7 @@ var searched = [];
 
 // get the input for searching and dropdown
 var input = document.getElementById("inp_search_blank");
-var dropdown = document.getElementById("search_type");
+var dropdown = document.getElementById("search_type_dropdown");
 
 // code for searching and filter based on it
 input.addEventListener("keyup", function() {
@@ -117,3 +128,84 @@ input.addEventListener("keyup", function() {
   // render the searched result
   showtable(searched);
 });
+
+
+
+/* CODE FOR SORT/ SORTING FUNCTION */
+
+/* SORTING WITH DROPDOWN */
+
+// Get the sort button SVG element
+var sortButton = document.getElementById('ic_sort');
+var sortDropdown = document.getElementById('sort_dropdown');
+
+// Add click event listener to the sort button
+sortButton.addEventListener('click', function() {
+  if (searched.length == 0 ){
+    console.log(searched.length);
+    sort(data);
+  } else {
+    console.log(searched.length);
+    sort(searched);
+  }
+  
+});
+
+function sort(data){
+  // Perform sorting or any other action here
+  var selectedValue = sortDropdown.value;
+  // Sort the data based on the selected value
+  if (selectedValue === 'id_smallest') {
+    data.sort(function(a, b) {
+      return parseInt(a.id) - parseInt(b.id);
+    });
+  } else if (selectedValue === 'id_biggest') {
+    data.sort(function(a, b) {
+      return parseInt(b.id) - parseInt(a.id);
+    });
+  }
+
+  // Render the sorted data
+  showtable(data);
+};
+
+
+/* SORTING WITH POPUP */
+
+// var button for sort/ soft button
+// var triggers = document.querySelectorAll('.sort_hint');
+
+// // Add click event listener for the button
+// triggers.forEach(function(trigger) {
+//   trigger.addEventListener('click', function() {
+    
+//     // Get the corresponding popup element
+//     var popup = document.getElementById("sort_popup")
+
+//     // run 'show' function with the popup element
+//     popup.classList.toggle('show');
+
+//     // Calculate the position of the triggering box
+//     var triggerRect = this.getBoundingClientRect();
+//     var triggerTop = triggerRect.top + window.scrollY;
+//     var triggerRight = triggerRect.right + window.scrollX;
+
+//     // Set the position of the popup below the triggering box
+//     popup.style.top = triggerTop + this.offsetHeight + 9 + 'px';
+//     popup.style.left = triggerRight - popup.offsetWidth + 53 + 'px';
+//   });
+// });
+
+// // Close the popup when the close button is clicked
+// var closeButtons = document.querySelectorAll('.sort_popup .sort_close');
+
+// // Add click event listener to each close button
+// closeButtons.forEach(function(closeButton) {
+//   closeButton.addEventListener('click', function() {
+//     // Get the parent popup element
+//     var popup = this.parentNode;
+
+//     // Hide the popup by removing the 'show' class
+//     popup.classList.remove('show');
+//   });
+// });
