@@ -265,11 +265,18 @@ input[type="text"]{
 }
 
 .invoice_table td:nth-child(6) {
+    /* display: flex; */
     justify-content: space-between;
+}
+
+.ic_edit{
+    color: #033246;
+    /* order: 1; */
 }
 
 .ic_delete{
     color:#033246;
+    /* order: 2; */
 }
 
 .ic_delete:hover{
@@ -278,8 +285,5 @@ input[type="text"]{
 
 .ic_more{
     color: #033246;
-}
-
-.ic_edit{
-    color: #033246;
+    /* order: 3; */
 }
