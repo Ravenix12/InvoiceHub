@@ -22,3 +22,12 @@ The notifications and reminders system allows users to create and modify reminde
 ### Searching localStorage for reminders
 
 After logging in, the Notifications system searches localStorage and extracts all the information stored. It then iterates through every element, extracts the outstanding amount, currency, and supplier from each table, creates a formatted string with the extracted information which is then shown as a push notification. 
+
+### Adding Reminders
+Pressing the "Add Reminder" button causes a new row to be added in the table. Users can edit each table cell with the relevant information. 
+
+### Deleting Reminders
+Users can delete reminders by selecting all the reminders to be deleted before pressing the "Delete Reminder" button. Pressing this button causes the algorithm to iterate over every row in the table and checks the status of the checkbox (located at the last column of the table): if the checkbox is checked (cb.checked==true), the algorithm removes the entire row from the table.
+
+### Saving changes
+After all necessary modifications to reminders are made, users have to their changes using the "Save" button. Upon pressing "Save", the values of all the table cells in each row are extracted and pushed as an array of strings into an array. After iterating through all the rows, the array is stored in localStorage.  
