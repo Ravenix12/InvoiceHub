@@ -54,13 +54,19 @@ function Signup(name, password, email, userType) {
         }
         
         // Redirect to the homepage
-        window.location.href = 'http://localhost:3000';
+        var port = window.location.port || ""; // Get the current port number, or an empty string if not present
+        var url = 'http://localhost' + (port ? ':' + port : ''); // Construct the URL with the dynamic port number
+        
+        window.location.href = url; // Redirect to the dynamically constructed URL
+        
       } else if (response.status === 409) {
         // Handle the duplicate entry error
         alert("Error occurred during signup: Duplicate entry");
+        alert("Account Already Exists");
       } else {
         // Handle other errors
         console.error('Error occurred during signup:', response.statusText);
+        alert("Sign up Failed")
       }
     })
     .catch(error => {
@@ -112,3 +118,13 @@ passwordToggle.addEventListener("mouseup", function () {
     passwordToggle.textContent = "Show";
 });
   
+document.querySelectorAll(".redirect")
+.forEach(
+  (button)=>{button.addEventListener('click',()=>{
+  var port = window.location.port || ""; // Get the current port number, or an empty string if not present
+  var url = 'http://localhost' + (port ? ':' + port : ''); // Construct the URL with the dynamic port number
+  window.location.href = url; // Redirect to the dynamically constructed URL
+});
+});
+
+
