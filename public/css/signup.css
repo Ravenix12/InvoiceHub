@@ -1,0 +1,66 @@
+/* CSS code for form styling */
+form {
+    max-width: 250px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .password-input-container {
+    position: relative;
+  }
+  
+  .password-input-container input[type="password"] {
+    padding-right: 30px;
+  }
+  
+  .password-input-container button {
+    position: absolute;
+    right: 5px;
+    top: 0;
+  }
+  
+  select {
+    width: 80%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Add this line to include padding in the width calculation */
+  }
+  input[type="submit"] {
+    width: fit-content;
+    
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    opacity: 0.8;
+  }
+  

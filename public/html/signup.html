@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/signup.css">
+    <script src="../js/signup.js" defer></script>
+    <title>User Login Page</title>
+</head>
+<body>
+    <form id="signup-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      
+        <label for="password">Password:</label>
+        <div class="password-input-container">
+          <input type="password" id="password" name="password" required>
+          <button type="button" id="password-toggle">Show</button>
+        </div>
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      
+        <label for="user-type">User Type:</label>
+        <select id="user-type" name="user-type">
+          <option value="admin">Admin</option>
+          <option value="guest">Guest</option>
+        </select>
+      
+        <input type="submit" value="Submit">
+        
+      </form>
+      <button id="displayimage">Display</button>
+
+
+</body>
+</html>

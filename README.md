@@ -18,8 +18,10 @@ The Retail Invoice Management System is a comprehensive software solution design
 >> Request Admin Access 
 
 
+### Commenting Guidelines 
 
-## Project Onboarding Documentation 
+For functions include function name - Action Performed 
+ie console.log(functionName + "Action Performed" );## Project Onboarding Documentation 
 
 
 Welcome to the team! This document serves as a guide to help you get up to speed with our project and understand the technologies and processes involved. By following the steps outlined below, you'll be ready to contribute effectively in no time.
