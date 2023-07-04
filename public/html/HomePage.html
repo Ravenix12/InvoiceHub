@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Invoice Hub</title>
-    <link rel="stylesheet" type ="text/css" href="Template.css">
+    <link rel="stylesheet" type ="text/css" href="../css/Template.css">
+    <link rel="stylesheet" type ="text/css" href="../css/HomePage.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
             <img class = "logo" src="Img/logo.svg"></img>
             <a class = "title" href="Template.html">Invoice Hub</a>
         </li>
-   
+        <li>
             <div class = "profile">
                 <img class ="profile_pic" src="Img/profile_pic.jpg">
                 <div class="personal_info">
@@ -89,12 +90,101 @@
                 </div>
             </li>
             </ul>
-            </div>
         </div>
+    </div>
+    
     
     <div class="content">
-        <h1>Welcome to Invoice Hub</h1>
-        <p>This is the main content area.</p>
+
+        <!-- contents at top -->
+        <div class="content_top">
+
+            <div class="content_top_left">
+                <!-- box for the top summary -->
+                <div class="summary">
+                    <div class ="total_outstanding">
+                        <span class="total_outstanding_title">TOTAL OUTSTANDING</span>
+                        <span class="total_outstanding_cost"><br>S$ 39,225</span>
+                    </div>
+                    <div class ="overdue">
+                        <span class="overdue_title">OVERDUE</span>
+                        <span class="overdue_cost"><br>S$ 9,225</span>
+                    </div>
+                    <div class ="due">
+                        <span class="due_title">DUE</span>
+                        <span class="due_cost"><br>S$ 25</span>
+                    </div>
+                </div>
+    
+                <!-- box for the uploading documents -->
+                <div class="upload">
+                    <div class="box_upload">
+                        <div class ="upload_invoice">
+                            <span class="total_outstanding_title">Inovice</span>
+                            <a class="ic_upload" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class ="upload_soa">
+                            <span class="overdue_title">State of Accounts</span>
+                            <a class="ic_upload" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class ="upload_credit_note">
+                            <span class="due_title">Credit Note</span>
+                            <a class="ic_upload" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- box for overdue since stat -->
+            <div class="overdue_stat">
+                <div class="overdue_title">OVERDUE SINCE</div>
+    
+            </div>
+    
+            <!-- box for sales and collections -->
+            <div class="sales_collections">
+                <div class="sc_title">SALES & COLLECTIONS</div>
+                <div class="sc_details">
+                    <div class ="sc_issue_date">
+                        <span class="sc_issue_date_title">FOR INVOICES ISSUED IN</span>
+                        <span class="total_outstanding_cost"><br>FEB 23</span>
+                    </div>
+                    <div class ="sc_billed">
+                        <span class="sc_billed_title">BILLED</span>
+                        <span class="sc_billed_num"><br>5,432</span>
+                    </div>
+                    <div class ="sc_collected">
+                        <span class="sc_collected_title">COLLECTED</span>
+                        <span class="sc_collected_num"><br>5,432</span>
+                    </div>
+                    <div class ="sc_outstanding">
+                        <span class="sc_outstanding_title">OUTSTANDING</span>
+                        <span class="sc_outstanding_num"><br>5,432</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- box for the stat summary -->
+        <div class="stat">
+            <div class="stat_title">Daily Statistics</div>
+        </div>
     </div>
 </body>
 </html>
