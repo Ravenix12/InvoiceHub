@@ -53,3 +53,109 @@ button:hover {
   flex-direction: column;
   align-items: center;
 }
+
+/* CSS code for form styling */
+#login-form {
+  margin: 0 auto;
+  padding:100px;
+  width:300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align: center;
+  }
+#login-form>* {
+  width:inherit;
+}  
+  
+  label {
+    display: block;
+    margin-bottom: 3px;
+    text-align: left;
+    font-weight:bold;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    width:100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .password-input-container {
+    position: relative;
+  }
+
+  .password-input-container button {
+    position: absolute;
+    right: -18px;
+    top: 0;
+  }
+  
+  select {
+
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Add this line to include padding in the width calculation */
+  }
+  input[type="submit"] {
+    width: fit-content;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    opacity: 0.8;
+  }
+  
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh; /* Set the height of the body to the viewport height */
+}
+
+.register-box {
+  display: flex;
+  flex-direction: row;
+  margin-top: auto; /* Push the register-box to the top of the available space */
+  margin-bottom:auto;
+  width:fit-content;
+  align-items:stretch;
+}
+
+.register-box > *{
+  flex:1;
+}
+
+.formintro{
+  text-align:left;
+  margin-bottom:20px;
+}
+
+.formtitle{
+  font-size:24px;
+  font-weight: bold;
+  
+}
+.back{
+  text-align:left;
+  margin-left:-20px;
+  margin-top:-40px;
+  margin-bottom:20px;
+}

@@ -38,7 +38,7 @@ function validateLogin(username, password) {
         // If login is verified and data is received in the response
         const localData = JSON.stringify(data);
         sessionStorage.setItem('localData', localData);
-        window.location.href = 'html/landingpage.html';
+        window.location.href = 'html/HomePage.html';
       } else {
         // If login is unsuccessful or no data is received in the response
         alert('Invalid username or password');
