@@ -71,6 +71,7 @@ a {
 /* styles for personal info section */
 
 .profile {
+    position: relative;
     width: 100%;
     padding: 10px;
     margin-top: 10px;
@@ -95,16 +96,16 @@ a {
     font-style: bold;
 }
 
-.btn_edit_profile {
-    /* maybe can replace with an icon and put at the right top */
+/* .btn_edit_profile {
+    maybe can replace with an icon and put at the right top
     font-size: 10px;
     margin-top: 10px;
     padding-right: 10px;
-    /* padding-left: 10px; */
-    /* border: 1px solid #D3D4CD; */
+    padding-left: 10px;
+    border: 1px solid #D3D4CD;
     background-color: #033246;
     color:#D3D4CD;
-}
+} */
 
 .btn_edit_profile:hover {
     background-color: #2D5261;
@@ -113,7 +114,11 @@ a {
 
 .notification{
     align-self: flex-start;
-
+    /* margin-left: 5px; */
+    position: absolute;
+    top:0;
+    right: 0;
+    padding: 15px;
     margin-top: 5px;
 }
 
@@ -224,6 +229,4 @@ a {
     margin-left: max(250px, 17%);
     padding: 20px;
     /* font-family: 'Lora', serif; */
-
-    
 }

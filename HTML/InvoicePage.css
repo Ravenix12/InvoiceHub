@@ -19,11 +19,12 @@
 /* style for the top contents (summary) */
 
 .content_top{
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
 
     min-width: 350px;
-    max-width: 400px;
+    max-width: 800px;
 
     gap: 20px
 }
@@ -40,6 +41,7 @@
 
     display: flex;
     gap: 30px;
+    width: 50%;
 
     padding: 10px;
     padding-left: 20px;
@@ -90,6 +92,50 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* styles for uploading invoices */
+
+.upload{
+    gap: 30px;
+    width: 40%;
+
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    border: 1px solid #2D5261;
+    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    border-radius: 10px;
+
+    text-align: left;
+    color:#033246;
+}
+
+.upload_invoice{
+    display:flex;
+    padding:5px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.upload_soa{
+    display:flex;
+    padding:5px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.upload_credit_note{
+    display:flex;
+    padding:5px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ic_upload{
+    color:#033246;
+}
+
 
 /* styles for invoice types navigation */
 
@@ -283,7 +329,8 @@ input[type="text"]{
     cursor: pointer;
 }
 
-.ic_more{
+.ic_export{
+    margin-left: 2px;
     color: #033246;
     /* order: 3; */
 }
