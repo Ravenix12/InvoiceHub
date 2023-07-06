@@ -10,7 +10,7 @@
 .home{
     background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
     /* background-color: #2D5261; */
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
 }
 
@@ -120,6 +120,7 @@
     display:flex;
     padding:5px;
     justify-content: space-between;
+    align-items: center;
     gap: 10px;
 }
 
@@ -138,6 +139,7 @@
 }
 
 .ic_upload{
+    width: 10%;
     color:#033246;
 }
 

@@ -2,7 +2,7 @@
 .invoice{
     background-image: linear-gradient(to left, #2D5261 99%, #D3D4CD 1%);
     /* background-color: #2D5261; */
-    width: 100%;
+    /* width: 100%; */
     padding: 10px;
 }
 
@@ -86,7 +86,7 @@
 /* style for invoice navigation */
 
 .invoice_navigation{
-    width: 100%;
+    /* width: 100%; */
 
     margin-top: 40px;
     display: flex;
@@ -133,6 +133,7 @@
 }
 
 .ic_upload{
+    width: 10%;
     color:#033246;
 }
 

@@ -11,6 +11,7 @@ body {
 a {
     text-decoration: none; 
     color: inherit;
+    width: 100%;
   }
   
   a:visited {
@@ -132,7 +133,6 @@ a {
 }
 
 .home{
-    width: 100%;
     padding: 10px;
 }
 
@@ -147,7 +147,6 @@ a {
 }
 
 .invoice{
-    width: 100%;
     padding: 10px;
 }
 
@@ -162,7 +161,6 @@ a {
 }
 
 .soa{
-    width: 100%;
     padding: 10px;
 }
 
@@ -177,7 +175,6 @@ a {
 }
 
 .supplier{
-    width: 100%;
     padding: 10px;
 }
 
@@ -192,7 +189,6 @@ a {
 }
 
 .payment{
-    width: 100%;
     padding: 10px;
 }
 
@@ -207,7 +203,6 @@ a {
 }
 
 .setting{
-    width: 100%;
     padding: 10px;
 }
 

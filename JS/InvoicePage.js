@@ -1,3 +1,5 @@
+// TODO fix the overflow error -> reaches the min screen width then automatically hide  the rest elements 
+
 /* CODE FOR RENDERING THE TABLE */
 
 // data from InvoiceData.js
