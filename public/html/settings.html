@@ -4,6 +4,8 @@
     <title>Invoice Hub</title>
     <link rel="stylesheet" type ="text/css" href="../css/Template.css">
     <link rel="stylesheet" type ="text/css" href="../css/settings.css">
+    <script src="../js/login-check.js" defer></script>    
+    <script src="../js/settings.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
@@ -115,10 +117,10 @@
         </table>
         <div id="messagebox"></div>
         <div id="dangerzone">
-            <h2>Upload File</h2>
+            <h2>DangerZone </h2>
             <div class="dangerzone-elem"><button id="deleteaccount">Delete Account</button></div>
             <div class="dangerzone-elem" > <input id="aws-call" type="file" accept=".jpeg"></div>
-            <button id="dummy">click me ?</button>
+            <button id="logout" onclick="logout()">Log Out </button>
         </div> 
             
     

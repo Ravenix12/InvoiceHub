@@ -1,5 +1,3 @@
-const localData = JSON.parse(sessionStorage.getItem('localData'))[0];
-
 document.getElementById("deleteaccount").addEventListener('click',function(event){    
     if(localData.mode=="guest"){
         fetch('/account/check-account', {
@@ -321,4 +319,8 @@ function detectTextBuckets(formData) {
   });
 }
 
-
+function logout(){
+  sessionStorage.removeItem('localData');
+  delete localData;
+  window.location.href = "../../index.html";
+}
