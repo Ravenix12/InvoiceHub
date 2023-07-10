@@ -1,5 +1,3 @@
-// TODO fix the overflow error -> reaches the min screen width then automatically hide  the rest elements 
-
 /* CODE FOR RENDERING THE TABLE */
 
 // data from InvoiceData.js
@@ -68,7 +66,7 @@ function showtable(data_arr) {
         <td>${data_arr[i].id}</td>
         <td>${data_arr[i].name}</td>
         <td>${data_arr[i].date}</td>
-        <td>${data_arr[i].amount}</td>
+        <td>$S ${data_arr[i].amount}</td>
         <td style="background-color: ${statusColor};">${data_arr[i].status}</td>
         <td>${previewIcon} ${editIcon} ${deleteIcon} ${exportIcon}</td>
       </tr>`;
@@ -102,12 +100,28 @@ table.addEventListener("click", function (event) {
   }
 });
 
-
 // execute the code for rendering the data
 showtable(data);
 
 // empty array for saving searched result
 var searched = [];
+
+
+
+/* CODE FOR CALCULATING THE COST FOR SUMMARY */
+
+// get the elements for the cost
+var total_outstanding_cost = document.getElementById("total_outstanding_cost");
+var overdue_cost = document.getElementById("overdue_cost");
+var due_cost = document.getElementById("due_cost");
+
+// funciton for calculating the cost for summary
+function calCost (data_arr){
+
+
+}
+
+
 
 // get the input for searching and dropdown
 var input = document.getElementById("inp_search_blank");
@@ -157,46 +171,80 @@ searchDropdown.addEventListener('change', function() {
 });
 
 
+
+
 /* CODE FOR SORT/ SORTING FUNCTION */
 
 /* SORTING WITH DROPDOWN */
 
 // get the dropdown
 var sortDropdown = document.getElementById('sort_dropdown');
+var ascendingButton = document.getElementById('ic_sort_asc');
+var descendingButton = document.getElementById('ic_sort_des');
 
-// Add change event listener to the sort dropdown
-sortDropdown.addEventListener('change', function() {
+ascendingButton.addEventListener('click', function() {
   if (searched.length == 0) {
-    sort(data);
+    sort_asc(data);
   } else {
-    sort(searched);
+    sort_asc(searched);
   }
 });
 
-function sort(data) {
-  // Perform sorting or any other action here
+descendingButton.addEventListener('click', function() {
+  if (searched.length == 0) {
+    sort_des(data);
+  } else {
+    sort_des(searched);
+  }
+});
+
+function sort_des(data){
   var selectedValue = sortDropdown.value;
 
-  // Sort the data based on the selected value
-  if (selectedValue === 'id_ascending') {
+  if (selectedValue === 'id_choice'){
     data.sort(function(a, b) {
       return parseInt(a.id) - parseInt(b.id);
     });
-  } else if (selectedValue === 'id_descending') {
-    data.sort(function(a, b) {
-      return parseInt(b.id) - parseInt(a.id);
-    });
-  } else if (selectedValue === 'date_recent') {
+  } else if (selectedValue === 'id_date') {
     data.sort(function(a, b) {
       var dateA = new Date(a.date);
       var dateB = new Date(b.date);
       return dateB - dateA;
     });
-  } else if (selectedValue === 'date_oldest') {
+  } else if (selectedValue === "id_name"){
+    data.sort(function(a, b) {
+      return a.name.localeCompare(b.name);
+    });
+  } else if (selectedValue === 'id_amount') {
+    data.sort(function(a, b) {
+      return parseInt(a.amount) - parseInt(b.amount);
+    });
+  }
+
+  // Render the sorted data
+  showtable(data);
+}
+
+function sort_asc(data){
+  var selectedValue = sortDropdown.value;
+
+  if (selectedValue === 'id_choice'){
+    data.sort(function(a, b) {
+      return parseInt(b.id) - parseInt(a.id);
+    });
+  } else if (selectedValue === 'id_date') {
     data.sort(function(a, b) {
       var dateA = new Date(a.date);
       var dateB = new Date(b.date);
       return dateA - dateB;
+    });
+  } else if (selectedValue === "id_name"){
+    data.sort(function(a, b) {
+      return b.name.localeCompare(a.name);
+    });
+  } else if (selectedValue === 'id_amount') {
+    data.sort(function(a, b) {
+      return parseInt(b.amount) - parseInt(a.amount);
     });
   }
 

@@ -42,6 +42,7 @@
     display: flex;
     gap: 30px;
     width: 50%;
+    overflow: hidden;
 
     padding: 10px;
     padding-left: 20px;
@@ -215,11 +216,11 @@ input[type="text"]{
     border-radius: 10px;
 }
 
-.ic_sort{
-    margin-left: 5px;
+.ic_sort_des, .ic_sort_asc{
+    margin-left: 0px;
 }
 
-.ic_sort:hover{
+.ic_sort_des, .ic_sort_asc:hover{
     cursor:pointer;
 }
 
