@@ -178,13 +178,25 @@ function sort(data) {
   var selectedValue = sortDropdown.value;
 
   // Sort the data based on the selected value
-  if (selectedValue === 'id_smallest') {
+  if (selectedValue === 'id_ascending') {
     data.sort(function(a, b) {
       return parseInt(a.id) - parseInt(b.id);
     });
-  } else if (selectedValue === 'id_biggest') {
+  } else if (selectedValue === 'id_descending') {
     data.sort(function(a, b) {
       return parseInt(b.id) - parseInt(a.id);
+    });
+  } else if (selectedValue === 'date_recent') {
+    data.sort(function(a, b) {
+      var dateA = new Date(a.date);
+      var dateB = new Date(b.date);
+      return dateB - dateA;
+    });
+  } else if (selectedValue === 'date_oldest') {
+    data.sort(function(a, b) {
+      var dateA = new Date(a.date);
+      var dateB = new Date(b.date);
+      return dateA - dateB;
     });
   }
 
