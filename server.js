@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const app = express();
-const table_name ={ login:"users" ,delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev"};
+const table_name ={ login:"users" ,delete_flag:"account_flag",images:"Images",handle_privilege:"account_elev",invoice:"invoices"};
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -32,6 +32,9 @@ app.use('/account',accountRouter);
 
 const awsRouter = require('./routes/rekognition');
 app.use('/rekognition/',awsRouter);
+
+const invoiceRouter = require('./routes/invoice');
+app.use('/invoice/',invoiceRouter)
 
 const port = 8000;
 app.listen(port, () => {

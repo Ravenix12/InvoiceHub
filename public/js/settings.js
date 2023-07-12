@@ -43,7 +43,6 @@ function fillTable() {
 }
 
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
-
 const dangerzoneDiv = document.getElementById('dangerzone');
 const dangerZoneElement = document.createElement("div")
 dangerZoneElement.classList.add("dangerzone-elem")
@@ -279,15 +278,73 @@ fileInput.addEventListener('change', event => {
   const file = event.target.files[0];
   const formData = new FormData();
   formData.append('jpeg', file);
-  const fileSizeInMB = file.size / (1024*1024);
-  console.log('File Size:',fileSizeInMB.toFixed(2), 'MB');
-  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
-    detectTextBuckets(formData);
-  }
-  else{
-    detectText(formData);
-  }
-}); 
+  const fileSizeInMB = file.size / (1024 * 1024);
+  console.log('File Size:', fileSizeInMB.toFixed(2), 'MB');
+
+  // Send the form data to the server-side script
+  fetch('/invoice/save-image', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data=>{
+      
+      var user = localData.user;
+      console.log(user);
+      var invoiceid = "invoice_id";
+      var invoice_name = "invoice_name";
+      var upload_date = new Date().toISOString().split('T')[0];
+      var status = "db";
+
+      const requestBody = {
+        user,
+        invoiceid,
+        invoice_name,
+        upload_date,
+        status,
+        data
+      };
+
+      const fakerequestBody = {
+        user: localData.user,
+        invoiceid: 12345,
+        invoice_name: "Sample Invoice",
+        upload_date: upload_date,
+        status: "Paid",
+        path: data
+      }
+
+      // Send the POST request to the server
+      fetch('/invoice/insert-record', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(fakerequestBody)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Record inserted successfully.');
+          } else {
+            console.error('Failed to insert the record.');
+          }
+        })
+        .catch(error => {
+          console.error('Error occurred while inserting the record:', error);
+        });
+    })
+    .catch(error => {
+      console.error('Error occurred while saving the image:', error);
+
+    });
+
+  // if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){write 
+  //   detectTextBuckets(formData);
+  // }
+  // else{
+  //   detectText(formData);
+  // }
+});
 
 function detectText(formData) {
   // Send the image data to the back-end using fetch API
@@ -321,6 +378,6 @@ function detectTextBuckets(formData) {
 
 function logout(){
   sessionStorage.removeItem('localData');
-  delete localData;
+  localData = "";
   window.location.href = "../../index.html";
 }
