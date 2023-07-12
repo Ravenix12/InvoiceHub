@@ -42,7 +42,7 @@ function validateLogin(username, password) {
       } else {
         // If login is unsuccessful or no data is received in the response
         alert('Invalid username or password');
-      }
+      } 
     })
     .catch(error => console.error(error));
 }

@@ -1,0 +1,352 @@
+* commit 3aaf1662878e0db37da3c365e22aea477e293476
+| Author: Guruprasath <guruprasath3200@gmail.com>
+| Date:   Thu Jul 6 12:58:07 2023 +0800
+| 
+|     Added logout feature
+| 
+* commit 97bc37c24bf6be53c7dde13d3f79ce861a111fe7
+| Author: Guruprasath <guruprasath3200@gmail.com>
+| Date:   Thu Jul 6 01:40:31 2023 +0800
+| 
+|     added settings
+|   
+*   commit de69de2f8565347ee20687a4d3ca91d063b3aa19
+|\  Merge: 46f6eab 1c7f90f
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 5 23:26:08 2023 +0800
+| | 
+| |     Merge branch 'search_query_sub'
+| | 
+| * commit 1c7f90fec5e7c98c0f193e76c0c3b339ce4af607
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 5 23:21:53 2023 +0800
+| | 
+| |     Deleted redundant files
+| | 
+| * commit 28806060f976352b52faea3f529e04b6135e808d
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 5 22:54:45 2023 +0800
+| | 
+| |      Fixed file structure
+| | 
+| * commit 7d3fd7762a18d7604caa9c156d5bc33af403d0fc
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Wed Jul 5 19:50:33 2023 +0800
+| | 
+| |     Minor changes after meeting
+| | 
+| * commit a7b76e258fd436b13d8fb340b5064ccc0ac827a3
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Mon Jul 3 19:58:33 2023 +0800
+| | 
+| |     re-located the folder
+| | 
+| * commit 5e98f818ed1e449a88d320876616bebbf7286ca4
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Mon Jul 3 17:02:42 2023 +0800
+| | 
+| |     Fixed error for deleting and added edit button for each invoice
+| | 
+| * commit 10be24e2f95408b4286642eaea0042358d677851
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Mon Jul 3 15:18:04 2023 +0800
+| | 
+| |     Fixed sorting algorithm and the deleting button
+| | 
+| * commit 929bce9894d8693e9ae837ac26479996761ef81d
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Sun Jul 2 14:51:28 2023 +0800
+| | 
+| |     saved .svg files separately
+| | 
+| * commit 9537af739251f6852018d237406ec7836cf66c9f
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Sun Jul 2 14:51:12 2023 +0800
+| | 
+| |     searching function, delete (a bit of error), and more button
+| | 
+| * commit 5cfe10cb80434e81d5737bffbd02bddf755265de
+| | Author: ChewonHan <about0322@naver.com>
+| | Date:   Sat Jul 1 15:06:09 2023 +0800
+| | 
+| |     InvoicePage created
+| | 
+* | commit 46f6eab47ee2354cbcbbd7f98e347371a3c1d6d4
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Wed Jul 5 23:19:46 2023 +0800
+| | 
+| |     Added gitignore
+| | 
+* | commit 03f216a3d7a9046137f03686cf97f1d7572fe684
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Tue Jul 4 23:38:59 2023 +0800
+| | 
+| |     Added redirect to main page
+| | 
+* | commit 6b24d792e0fd6de3ddfad9641ed3e9c9b0f16066
+| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | Date:   Tue Jul 4 23:19:56 2023 +0800
+| | 
+| |     added css to sign up page , rough draft
+| |   
+* |   commit a6730214e8bc3c4b7d7c7327e0a6928bb4bba56a
+|\ \  Merge: 6fe34fd 08836e4
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jul 4 17:33:05 2023 +0800
+| | | 
+| | |     Merge branch 'user_auth_sub'
+| | | 
+| * | commit 08836e47d0bbf7317ffa120da4da519b5329cfe1
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Thu Jun 29 16:34:23 2023 +0800
+| | | 
+| | |     added buckets
+| | | 
+| * | commit 70deafb5d1b22b4db0302bbd331e4ca9a13d1d1c
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Thu Jun 29 01:09:07 2023 +0800
+| | | 
+| | |     Seperated backend routes
+| | | 
+| * | commit 745bf14fbc9e88c0dcdada511c049bfb2a06f4da
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jun 28 23:41:30 2023 +0800
+| | | 
+| | |     Fixed aws rekognition for small jpegs
+| | | 
+| * | commit cdf299c8ec5abe0a4cd878b4f4acddb937b20d5f
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jun 27 17:01:15 2023 +0800
+| | | 
+| | |      Nothing Worked
+| | | 
+| * | commit 143d6a94bdcc9848e7e48902b44d09d85380fce2
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jun 21 15:47:39 2023 +0800
+| | | 
+| | |     Added sql dump
+| | | 
+| * | commit 42099635dbfe58004c320acc7d6b03e9833f9477
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jun 14 10:30:58 2023 +0800
+| | | 
+| | |     Added documentation to js files to make it more readable
+| | | 
+| * | commit 734f9f10c43d89bf8391bcd0a9101ee43455dd1b
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jun 14 09:58:21 2023 +0800
+| | | 
+| | |     Added Cascade delete to db
+| | | 
+| * | commit 2fe592728f0b03324f03bf94e8ec4bf2555e16b2
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jun 13 22:40:06 2023 +0800
+| | | 
+| | |     Added decline request/accept request functionality on guest and admin side
+| | |     
+| | |      I have no clue how much i am done with this , more stuff keeps on creeping up as i complete basic functionality , im so lost
+| | | 
+| * | commit 253069020277b6f9f41c782e9754041db5e619e9
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jun 13 17:43:13 2023 +0800
+| | | 
+| | |     Added decline request functionality
+| | |     
+| | |     admin can now decline user , have to add functionality to display it onetime to end user before deletetion from table
+| | | 
+| * | commit 2ac8b85d386e9b6f54dce865e7ebbaa05809cf87
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jun 13 11:13:24 2023 +0800
+| | | 
+| | |     cleaned up code in landingpage'
+| | | 
+| * | commit 66988339f374b8f4809a1b9cd543b8f1decc628d
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jun 13 11:09:46 2023 +0800
+| | | 
+| | |     Added ability to request admin access from registration page
+| | | 
+| * | commit 25048a01519616075511426ddc011d894d0cde25
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Mon Jun 12 23:19:14 2023 +0800
+| | | 
+| | |     Added user privilege elevation
+| | |     
+| | |     guest user can now request to have higher privilege and admin user can approve
+| | | 
+| * | commit 9dde5cc9cd77e9216b6d28d9b02bfd845b15a371
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Thu Jun 8 22:16:06 2023 +0800
+| | | 
+| | |     fixed delete account for guest accounts
+| | | 
+| * | commit bd36895af2428fea32c4c9fb26612a919d98a4af
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Sat Jun 3 17:16:22 2023 +0800
+| | | 
+| | |     Added Delete account
+| | |     
+| | |      Delete account for guest users -> adds data to table account_flag
+| | | 
+| * | commit c4c7d5325c3f1015824e22c518974c02a84d5130
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Sat Jun 3 13:28:34 2023 +0800
+| | | 
+| | |      Added Onboarding documentation
+| | | 
+| * | commit 776766d20e273cfa3c5262a8a06d6239b8ed5fbd
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Fri Jun 2 20:30:47 2023 +0800
+| | | 
+| | |     Added User Registration
+| | |     
+| | |      now all users get registered as guest , need to implement a method that allows admin users to allow /  reject admin guest users that want to be admin
+| | | 
+| * | commit 36add790c3075e1f5836ef662fd0ca93326b1932
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Thu Jun 1 00:37:59 2023 +0800
+| | | 
+| | |      Added Landing Page ( User Report) for diff between admin and user access types
+| | | 
+| * | commit 9a6868a3c444aa3499a59bdd8fb63e796fba30e4
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed May 31 23:43:39 2023 +0800
+| | | 
+| | |     Added Basic File Structure
+| | |     
+| | |      First time writing commit message in a while , so bear with me . Added File structure , minimal server side script , minimal sql backend functionality . Made a user login page , new user registration page . Bare Bones css stuff
+| | |   
+| | | * commit 395c799fce5cd787584d35c4b2246b392b242a2d
+| | | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | | Date:   Wed Jul 5 22:34:04 2023 +0800
+| | | | 
+| | | |     deleted redundant folder
+| | | | 
+| | | * commit e9a109588e941f25c8840c3d7e77c30c26935835
+| | |/  Author: Guruprasath <guruprasath3200@gmail.com>
+| | |   Date:   Tue Jul 4 21:29:28 2023 +0800
+| | |   
+| | |       fixed file structure
+| | | 
+| | * commit 6050065e13574208d68aa8ec6cc20580097cd749
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Sat Jul 1 12:07:23 2023 +0800
+| | | 
+| | |     Update changes
+| | | 
+| | * commit c28b65741dc611ffc5348fea6a0c7fe8cf5af3fc
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Wed Jun 28 13:54:11 2023 +0800
+| | | 
+| | |     Update the font
+| | | 
+| | * commit 976f114f58fd37171755280ff49a86a3183c232f
+| | | Author: ChewonHan <about0322@naver.com>
+| | | Date:   Fri Jun 23 14:09:08 2023 +0800
+| | | 
+| | |     Set up html basic frame + homepage basic frame
+| | | 
+| | * commit 296d3ad8b04d1528b99c3deca215b903e8d4e5e3
+| |/  Author: ChewonHan <about0322@naver.com>
+|/|   Date:   Thu Jun 22 16:00:40 2023 +0800
+| |   
+| |       initial basic template setup
+| |   
+| | * commit 692d3ff9c23500b5bcc8f4687a3bd787887d9bf3
+| | | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Tue Jul 4 17:15:41 2023 +0800
+| | | 
+| | |     maintenance work
+| | |     
+| | |     Renamed files , ported script code in html to a js file
+| | | 
+| | * commit 7ae56cce93151f2c880a40e914ab487e1a5038a3
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 20:08:46 2023 +0800
+| | | 
+| | |     Update Notifications and Reminders.html
+| | | 
+| | * commit 66e9719cd209855fd18b7ce906a85a076b44de36
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 20:08:09 2023 +0800
+| | | 
+| | |     Update Notifications and Reminders.html
+| | | 
+| | * commit f411346d422d548638ec242025320af560af5b33
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 19:56:50 2023 +0800
+| | | 
+| | |     Update README.md
+| | | 
+| | * commit 7774bce0b02f7d3f9fcf75879f8ebbf12a5079e0
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 19:38:01 2023 +0800
+| | | 
+| | |     Update README.md
+| | | 
+| | * commit 19f9528985205915485e74dd9911671d3bf2b2e5
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 19:36:34 2023 +0800
+| | | 
+| | |     Update README.md
+| | | 
+| | * commit a01298af53190ae7ee5421fb1469f84461036339
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 19:35:59 2023 +0800
+| | | 
+| | |     Update README.md
+| | | 
+| | * commit 550789843fd35ddb1200e7dd083ed9fef4a72d17
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Mon Jul 3 19:27:22 2023 +0800
+| | | 
+| | |     Update README.md
+| | | 
+| | * commit 7dc54814fa924e03c72469f96ac86256356cfaf7
+| | | Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+| | | Date:   Thu Jun 29 09:13:29 2023 +0800
+| | | 
+| | |     Update Notifications and Reminders.html
+| | | 
+| | * commit 772969cdef46b0b9ede951e34f80e3b9153ddcc6
+| |/  Author: Josiahfong <90824733+Josiahfong@users.noreply.github.com>
+|/|   Date:   Thu Jun 29 09:10:46 2023 +0800
+| |   
+| |       Add files via upload
+| |   
+| | * commit 954de10f316194f93da8c198a73a0974488ab76c
+| |/| Merge: 6fe34fd 615901c
+|/| | Author: Guruprasath <guruprasath3200@gmail.com>
+| | | Date:   Wed Jun 21 21:04:49 2023 +0800
+| | | 
+| | |     WIP on main: 6fe34fd Shifted onboarding docs to main branch
+| | | 
+| | * commit 615901ce62447bddb7a9f839f0ef99e855c20df6
+| |/  Author: Guruprasath <guruprasath3200@gmail.com>
+|/|   Date:   Wed Jun 21 21:04:49 2023 +0800
+| |   
+| |       index on main: 6fe34fd Shifted onboarding docs to main branch
+| | 
+* | commit 6fe34fd0b91d3d2b9cb5b59d04d2859cd056b5f5
+|/  Author: Guruprasath <guruprasath3200@gmail.com>
+|   Date:   Tue Jun 13 11:15:33 2023 +0800
+|   
+|       Shifted onboarding docs to main branch
+| 
+* commit a07e0c15dc20ea0572e6a48ea8602936c83aac14
+| Author: Guruprasath <guruprasath3200@gmail.com>
+| Date:   Wed May 31 20:29:16 2023 +0800
+| 
+|      Added Progress Notes
+| 
+* commit 2548ca235793b9eaae998cdba17b616498a0e0cd
+| Author: Guruprasath <guruprasath3200@gmail.com>
+| Date:   Wed May 31 12:21:58 2023 +0800
+| 
+|     test commit
+| 
+* commit 72d73fb7fc24c176f0a605ffd434f5bb2a270397
+  Author: Guruprasath <guruprasath3200@gmail.com>
+  Date:   Wed May 31 12:14:56 2023 +0800
+  
+      Initial commit
