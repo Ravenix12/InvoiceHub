@@ -38,13 +38,20 @@ router.post('/upload-jpeg', (req, res) => {
       // Process the response
 
       const textDetections = response.TextDetections.filter(detection => detection.Type === 'WORD');
-      const detectedTexts = textDetections.map(detection => detection.DetectedText);
-      console.log(textDetections);
-      console.log('Detected Texts:', detectedTexts);
-      res.sendStatus(200);
+
+      textDetections.forEach(detection => {
+        const { Confidence, Geometry } = detection;
+        const { BoundingBox, Polygon } = Geometry;
+      
+        console.log('Confidence:', Confidence);
+        console.log('Bounding Box:', BoundingBox);
+        console.log('Polygon:', Polygon);
+      });  
+
+      res.status(200).json(textDetections);
     } catch (err) {
       console.error('Error:', err);
-      res.sendStatus(500);
+      res.status(500);
     }
   });
 });
@@ -90,12 +97,11 @@ router.post('/upload-jpeg-bucket', (req, res) => {
       const rekognitionResponse = await rekognitionClient.detectText(rekognitionParams);
       // Process the response
       const textDetections = rekognitionResponse.TextDetections.filter(detection => detection.Type === 'WORD');
-      const detectedTexts = textDetections.map(detection => detection.DetectedText);
-      console.log('Detected Texts:', detectedTexts);
-      res.sendStatus(200);
+    
+    res.status(200).json(textDetections);
     } catch (err) {
       console.error('Error:', err);
-      res.sendStatus(500);
+      res.status(500);
     }
   });
 });

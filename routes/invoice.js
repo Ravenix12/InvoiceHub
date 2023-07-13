@@ -56,7 +56,88 @@ router.post('/save-image', upload.single('jpeg'), (req, res) => {
     }
   });
 
+  router.post('/save-detected-text', async (req, res) => {
+    const { invoiceid, detectedText } = req.body;
 
-// Export the router
+    console.log("Saving detected text for invoice with id:", invoiceid, "Detected Text:", detectedText);
+  
+    const query = `UPDATE invoices SET detectedText = ? WHERE invoiceid = ?`;
+    try {
+      const connection = await pool.getConnection();
+      const results = await connection.query(query, [detectedText, invoiceid]);
+  
+      console.log('Detected text saved successfully!');
+      res.status(200).json({ message: 'Detected text saved successfully' });
+  
+      connection.release();
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: 'An error occurred while saving detected text' });
+    }
+  });
+
+  router.get('/get-detected-text/:invoiceid', async (req, res) => {
+    const invoiceId = req.params.invoiceid;
+  
+    console.log("Requesting detected text for invoice with id:", invoiceId);
+  
+    const query = `SELECT detectedText FROM invoices WHERE invoiceid = ?`;
+    try {
+      const connection = await pool.getConnection();
+      const [rows] = await connection.query(query, [invoiceId]);
+      
+      if (rows.length > 0) {
+        const detectedTexts = rows.map(row => row.detectedText);
+        console.log('Detected texts retrieved successfully:', detectedTexts);
+        res.status(200).send(detectedTexts.join('\n')); // Send the detected texts as plain text
+      } else {
+        console.log('No detected texts found');
+        res.status(404).json({ message: 'No detected texts found' });
+      }
+      connection.release();
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: 'An error occurred while retrieving detected text' });
+    }
+  });
+  
+
+  router.get('/all', async (req, res) => {
+    try {
+      const connection = await pool.getConnection();
+      const [rows] = await connection.query('SELECT * FROM invoices');
+      connection.release();
+      res.json(rows);
+    } catch (error) {
+      console.error('Error fetching invoices:', error);
+      res.status(500).json({ error: 'An error occurred while fetching invoices' });
+    }
+  });
+  
+  // router.get('/get-detected-text', async (req, res) => {
+
+  //   const query = `SELECT detectedText FROM invoices`;
+  //   try {
+  //     const connection = await pool.getConnection();
+  //     const [rows] = await connection.query(query);
+      
+  //     if (rows.length > 0) {
+  //       const detectedTexts = rows.map(row => row.detectedText);
+  //       console.log('Detected texts retrieved successfully:', detectedTexts);
+  //       res.status(200).send(detectedTexts.join('\n')); // Send the detected texts as plain text
+  //     } else {
+  //       console.log('No detected texts found');
+  //       res.status(404).json({ message: 'No detected texts found' });
+  //     }
+      
+  //     connection.release();
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     res.status(500).json({ error: 'An error occurred while retrieving detected texts' });
+  //   }
+  // });
+  
+
+  // Export the router
 module.exports = router;
 

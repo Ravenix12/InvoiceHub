@@ -42,6 +42,105 @@ function fillTable() {
     document.getElementById('email').textContent = localData.Email;
 }
 
+function fillInvoices(){
+
+  // Fetch the invoices data from the backend
+  fetch('/invoice/all')
+    .then(response => response.json())
+    .then(data => {
+      // Get the table body element
+      const tableBody = document.querySelector('#invoices-table tbody');
+
+      // Loop through the data and populate the table rows
+      data.forEach(invoice => {
+        const row = document.createElement('tr');
+
+        const usersCell = document.createElement('td');
+        usersCell.textContent = invoice.users;
+        row.appendChild(usersCell);
+
+        const invoiceIdCell = document.createElement('td');
+        invoiceIdCell.textContent = invoice.invoiceid;
+        row.appendChild(invoiceIdCell);
+
+        const invoiceNameCell = document.createElement('td');
+        invoiceNameCell.textContent = invoice.invoice_name;
+        row.appendChild(invoiceNameCell);
+
+        const uploadDateCell = document.createElement('td');
+        uploadDateCell.textContent = invoice.upload_date;
+        row.appendChild(uploadDateCell);
+
+        const statusCell = document.createElement('td');
+        statusCell.textContent = invoice.status;
+        row.appendChild(statusCell);
+
+        // Get the detected text cell element
+        const detectedTextCell = document.createElement('td');
+        detectedTextCell.textContent = "View";
+        detectedTextCell.value= invoice.invoiceid;
+        detectedTextCell.addEventListener('click',(event)=>{
+          console.log('invoice id is ',event.target.value);
+          const newURL = `http://localhost:8000/invoice/get-detected-text/${event.target.value}`;
+        window.open(newURL);
+        })
+        row.appendChild(detectedTextCell);
+        const pathCell = document.createElement('td');
+        pathCell.textContent = invoice.path;
+    
+        pathCell.addEventListener('click', (event) => {
+          const filePath = 'http://127.0.0.1:8080/'+event.target.textContent;
+
+          window.open(filePath);
+        });
+
+
+        const notifs = document.createElement('div');
+
+        var svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svgElement.setAttribute('class', 'ic_notification');
+        svgElement.setAttribute('width', '16');
+        svgElement.setAttribute('height', '16');
+        svgElement.setAttribute('fill', 'currentColor');
+        svgElement.setAttribute('viewBox', '0 0 16 16');
+        
+        var pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathElement.setAttribute('d', 'M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z');
+        
+        svgElement.appendChild(pathElement);
+          
+        
+
+        notifs.appendChild(svgElement);
+        
+        var svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svgElement.setAttribute('class', 'ic_notification');
+        svgElement.setAttribute('width', '16');
+        svgElement.setAttribute('height', '16');
+        svgElement.setAttribute('fill', 'currentColor');
+        svgElement.setAttribute('viewBox', '0 0 16 16');
+        
+        var pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        pathElement.setAttribute('d', 'M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z');
+        
+        svgElement.appendChild(pathElement);
+          
+        notifs.appendChild(svgElement);
+        
+        
+        row.appendChild(notifs);
+        row.appendChild(pathCell);
+
+        tableBody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching invoices data:', error);
+    });
+
+}
+
+fillInvoices();
 // Assuming you have a variable called isAdminMode that indicates whether you're in admin mode or not
 const dangerzoneDiv = document.getElementById('dangerzone');
 const dangerZoneElement = document.createElement("div")
@@ -290,7 +389,6 @@ fileInput.addEventListener('change', event => {
     .then(data=>{
       
       var user = localData.user;
-      console.log(user);
       var invoiceid = "invoice_id";
       var invoice_name = "invoice_name";
       var upload_date = new Date().toISOString().split('T')[0];
@@ -338,46 +436,86 @@ fileInput.addEventListener('change', event => {
 
     });
 
-  // if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){write 
-  //   detectTextBuckets(formData);
-  // }
-  // else{
-  //   detectText(formData);
-  // }
+  if(formData.get('jpeg').size/(1024*1024).toFixed(2)>=5){
+    detectTextBuckets(formData).then(detectedText=>{
+      console.log(typeof detectedText);
+
+      fetch('/invoice/save-detected-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invoiceid: 12345, detectedText: JSON.stringify(detectedText) })
+      }).then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+      });
+    })
+    .catch(error=>{
+      console.error("Error occured"+error);
+    })
+  }
+  else{
+    detectText(formData).then(detectedText=>{
+      console.log(detectedText);
+
+      fetch('/invoice/save-detected-text', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invoiceid: 12345, detectedText: detectedText })
+      }).then(response=>response.json())
+      .then(data=>{
+        console.log(data);
+      });
+    
+    })
+    .catch(error=>{
+      console.error("Error occured"+error);
+    })
+  }
+
+
 });
 
 function detectText(formData) {
-  // Send the image data to the back-end using fetch API
-  fetch('/rekognition/upload-jpeg', {
+  return fetch('/rekognition/upload-jpeg', {
     method: 'POST',
     body: formData
   })
   .then(response => response.json())
   .then(data => {
-    console.log('File uploaded successfully:', data);
+    console.log('Text Detected:', data);
+    return data; // Return the data
   })
   .catch(error => {
     console.error('Error uploading file:', error);
+    throw error; // Throw the error to propagate it further
   });
 }
 
+
 function detectTextBuckets(formData) {
-  // Send the image data to the back-end using fetch API
-  fetch('/rekognition/upload-jpeg-bucket', {
+  return fetch('/rekognition/upload-jpeg-bucket', {
     method: 'POST',
     body: formData
   })
   .then(response => response.json())
   .then(data => {
-    console.log('File uploaded successfully:', data);
+    console.log('Text Detected Buckets:');
+    return data; // Return the data
   })
   .catch(error => {
     console.error('Error uploading file:', error);
+    throw error; // Throw the error to propagate it further
   });
 }
+
 
 function logout(){
   sessionStorage.removeItem('localData');
   localData = "";
   window.location.href = "../../index.html";
 }
+
