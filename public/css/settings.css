@@ -237,13 +237,13 @@ a {
 }
 
 table {
-    width: 300px;
-
+    width:fit-content;
     margin-top: 20px;
     }
 
 th, td {
     padding: 8px;
+
     text-align: center;
     }
 
@@ -274,4 +274,3 @@ th {
 .selected-button{
     border:5px solid red;
     }
-

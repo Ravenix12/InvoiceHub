@@ -55,83 +55,121 @@ function fillInvoices(){
       data.forEach(invoice => {
         const row = document.createElement('tr');
 
-        const usersCell = document.createElement('td');
-        usersCell.textContent = invoice.users;
-        row.appendChild(usersCell);
-
-        const invoiceIdCell = document.createElement('td');
-        invoiceIdCell.textContent = invoice.invoiceid;
-        row.appendChild(invoiceIdCell);
-
-        const invoiceNameCell = document.createElement('td');
-        invoiceNameCell.textContent = invoice.invoice_name;
-        row.appendChild(invoiceNameCell);
-
-        const uploadDateCell = document.createElement('td');
-        uploadDateCell.textContent = invoice.upload_date;
-        row.appendChild(uploadDateCell);
-
-        const statusCell = document.createElement('td');
-        statusCell.textContent = invoice.status;
-        row.appendChild(statusCell);
-
         // Get the detected text cell element
-        const detectedTextCell = document.createElement('td');
-        detectedTextCell.textContent = "View";
-        detectedTextCell.value= invoice.invoiceid;
-        detectedTextCell.addEventListener('click',(event)=>{
-          console.log('invoice id is ',event.target.value);
-          const newURL = `http://localhost:8000/invoice/get-detected-text/${event.target.value}`;
-        window.open(newURL);
-        })
-        row.appendChild(detectedTextCell);
-        const pathCell = document.createElement('td');
-        pathCell.textContent = invoice.path;
-    
-        pathCell.addEventListener('click', (event) => {
-          const filePath = 'http://127.0.0.1:8080/'+event.target.textContent;
 
-          window.open(filePath);
-        });
+        // detectedTextCell.addEventListener('click',(event)=>{
+        //   console.log('invoice id is ',event.target.value);
+        //   const newURL = `http://localhost:8000/invoice/get-detected-text/${event.target.value}`;
+        // window.open(newURL);
+        // })
+        // row.appendChild(detectedTextCell);
 
+        // pathCell.addEventListener('click', (event) => {
+        //  
+        // });
 
         const notifs = document.createElement('div');
+        
+        // var deleteIcon = `
+        // <svg class="ic_delete"  xmlns="http://www.w3.org/2000/svg" value="${invoice.path}" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+        //     <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+        //   </svg>`;
+    
+          var previewIcon =  `
+            <svg xmlns="http://www.w3.org/2000/svg" onclick="openImage(this.getAttribute('value'))" value='${invoice.path}' width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+            </svg>`
+     
+          var exportIcon = `
+              <svg class="ic_export"  onclick="openText(this.getAttribute('value'))" xmlns="http://www.w3.org/2000/svg" value="${invoice.invoiceid}" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+              </svg>`;
+      
+          // // render each row of data
 
-        var svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svgElement.setAttribute('class', 'ic_notification');
-        svgElement.setAttribute('width', '16');
-        svgElement.setAttribute('height', '16');
-        svgElement.setAttribute('fill', 'currentColor');
-        svgElement.setAttribute('viewBox', '0 0 16 16');
-        
-        var pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        pathElement.setAttribute('d', 'M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z');
-        
-        svgElement.appendChild(pathElement);
           
-        
-
-        notifs.appendChild(svgElement);
-        
-        var svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svgElement.setAttribute('class', 'ic_notification');
-        svgElement.setAttribute('width', '16');
-        svgElement.setAttribute('height', '16');
-        svgElement.setAttribute('fill', 'currentColor');
-        svgElement.setAttribute('viewBox', '0 0 16 16');
-        
-        var pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        pathElement.setAttribute('d', 'M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z');
-        
-        svgElement.appendChild(pathElement);
+          tableBody.innerHTML += `
+            <tr>
+              <td>${invoice.invoiceid}</td>
+              <td>${invoice.invoice_name}</td>
+              <td>${invoice.upload_date}</td>
+              <td>${previewIcon}  ${exportIcon}</td>
+            </tr>`;
           
-        notifs.appendChild(svgElement);
-        
-        
-        row.appendChild(notifs);
-        row.appendChild(pathCell);
+        // var previewIcon = document.createElement("a");
+        // previewIcon.href = "#";
 
-        tableBody.appendChild(row);
+        // var previewSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // previewSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        // previewSvg.setAttribute("width", "16");
+        // previewSvg.setAttribute("height", "16");
+        // previewSvg.setAttribute("fill", "currentColor");
+        // previewSvg.setAttribute("class", "bi bi-eye");
+        // previewSvg.setAttribute("viewBox", "0 0 16 16");
+
+        // var previewPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        // previewPath.setAttribute(
+        //   "d",
+        //   "M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+        // );
+
+        // previewSvg.appendChild(previewPath);
+        // previewIcon.appendChild(previewSvg);
+
+        // // Create the export icon element
+        // var exportIcon = document.createElement("a");
+        // exportIcon.href = "#";
+
+        // var exportSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // exportSvg.setAttribute("class", "ic_export");
+        // exportSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        // exportSvg.setAttribute("width", "16");
+        // exportSvg.setAttribute("height", "16");
+        // exportSvg.setAttribute("fill", "currentColor");
+        // exportSvg.setAttribute("class", "bi bi-box-arrow-right");
+        // exportSvg.setAttribute("viewBox", "0 0 16 16");
+        
+        // var exportPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        // exportPath.setAttribute("fill-rule", "evenodd");
+        // exportPath.setAttribute(
+        //   "d",
+        //   "M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"
+        // );
+
+        // exportSvg.appendChild(exportPath);
+        // exportIcon.appendChild(exportSvg);
+        // exportIcon.value=invoice.path;
+
+        // // Add event listener to the preview icon
+        // previewIcon.addEventListener("click", function (event) {
+        //   console.log("Preview icon clicked");
+        //   // Add your code to handle the preview icon click event
+        // });
+
+        // exportIcon.addEventListener('click',(event)=>{
+        //   const filePath = 'http://127.0.0.1:8080/'+event.target.value;
+        //   //   window.open(filePath);
+        // })
+
+        // // Add the row to the table
+        // table.innerHTML += `
+        //   <tr>
+        //     <td>${invoice.invoiceid}</td>
+        //     <td>${invoice.invoice_name}</td>
+        //     <td>${invoice.upload_date}</td>
+        //     <td>${previewIcon.outerHTML} ${exportIcon.outerHTML}</td>
+        //   </tr>`;
+
+
+
+
+                
+        // row.appendChild(notifs);
+        
+
+
       });
     })
     .catch(error => {
@@ -512,10 +550,22 @@ function detectTextBuckets(formData) {
   });
 }
 
-
 function logout(){
   sessionStorage.removeItem('localData');
   localData = "";
   window.location.href = "../../index.html";
 }
 
+function openImage(value){
+window.open('http://127.0.0.1:8080/'+value);
+}
+
+function openText(value){
+    const newURL = `http://localhost:8000/invoice/get-detected-text/${value}`;
+        window.open(newURL);
+}
+
+    // previewIcon.addEventListener("click", function (event) {
+        //   console.log("Preview icon clicked");
+        //   // Add your code to handle the preview icon click event
+        // });
