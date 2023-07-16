@@ -3,8 +3,11 @@
 <head>
     <title>Invoice Hub</title>
     <link rel="stylesheet" type="text/css" href="Template.css">
+
+    
 </head>
 <body>
+    
     <div class="sidebar">
         <ul>
             <li><a class="title" href="#">Invoice Hub</a></li>
@@ -76,7 +79,9 @@
 
     <div class="content">
         <h1>Welcome to Invoice Hub</h1>
-        <p>Notifications</p>
+        <h2>Notifications</h2>
+        <p>Welcome! Add, modify, and remove reminders here. </p>
+        <p></p>
         <style>
             table, th {
                 border: 1px solid black;
@@ -102,59 +107,79 @@
             document.getElementById("Data Table").innerHTML = localStorage.getItem("Data Table");
             document.getElementById("Data Table").style.textAlign = "center";//center-aligns text
         </script>
-
         <script>
-
-            //creates reminder if important fields are not empty, and displays reminder as push notification
+            /*
+            creates reminder if important fields are not empty
+            Reminder displayed as confirm dialog, users must press 'OK'
+            If users press cancel, notification is resent as a push notification
+            */
             var table = document.getElementById("Data Table");
             var row = document.getElementById("Data Table").getElementsByTagName("tr");
             var length = row.length - 1;
-
+            var last_line;
 
             for (let y = length; y > 0; y--) {
                 var person = document.getElementById("Data Table").rows[y].cells[0].innerHTML;
-
                 var amount = document.getElementById("Data Table").rows[y].cells[4].innerHTML;
-
                 var currency = document.getElementById("Data Table").rows[y].cells[3].innerHTML;
-
                 var date = document.getElementById("Data Table").rows[y].cells[2].innerHTML;
-                if (person == '<br>' || amount == '<br>' || currency == '<br>') {
-                    alert("Notification " + y + " is missing important details, therefore the reminder cannot be shown.");
-                } else {
+                if (person == '' || amount == '' || currency == '' || person == '<br>' || amount == '<br>' || currency == '<br>') {
+                    new Notification("Notification " + y + " is missing important details, therefore the reminder cannot be shown.");
+                }
+
+                else {
                     var message = "You have an outstanding amount of " + currency + amount + " due to " + person;
                     Notification.requestPermission();
-                    let notification = new Notification(message + "\n Click notification to acknowledge");
-                    notification.addEventListener("click", () => {
-                        console.log("Acknowledged");
+                    var array = [];
+                    let notification = new Notification(message, {
+                        body: 'Click to acknowledge'
                     });
+                    notification.addEventListener("click", () => {
+                        array.push(true);
+                        console.log("Notification " + y + " acknowledged");
+                        if (array.length == length) {
+                            console.log("All notifications acknowledged");
+                            last_line = "All notifications acknowledged";
+                        } else {
+                            console.log("Some reminders are not acknowledged");
+                            last_line = "Some reminders are not acknowledged";
+                        };
+                        
+                        if (last_line == "All notifications acknowledged") {
+                            alert(last_line);
+                        } else {
+                            //Do nothing
+                        };
+                    });
+     
                 };
-
-
-            }
-
+                //users can check which notifications they did not acknowledge by checking the console
+            };
+            
+            
         </script>
+
         <button onclick="Add()">Add</button>
         <script type="text/javascript">
             function Add() {
                 var table = document.getElementById("Data Table");
                 var newRow = table.insertRow(1);
 
-                //Creates table cell and sets the default value to "" to be modified by the user
+                //Creates table cell and sets the default value to "" to be modified by the user. Default value for currency is SGD
                 var cell1 = newRow.insertCell(0);//add new cells
-                cell1.innerHTML = "";
+                cell1.innerHTML = "<br>";
 
                 var cell2 = newRow.insertCell(1);
-                cell2.innerHTML = '';
+                cell2.innerHTML = "<br>";
 
                 var cell3 = newRow.insertCell(2);
-                cell3.innerHTML = '';
+                cell3.innerHTML = "<br>";
 
                 var cell4 = newRow.insertCell(3);
-                cell4.innerHTML = "";
+                cell4.innerHTML = "SGD";
 
                 var cell5 = newRow.insertCell(4);
-                cell5.innerHTML = '';
+                cell5.innerHTML = "<br>";
 
                 newRow.insertAdjacentHTML('beforeEnd', "<td> <div class='form-control'><input type='checkbox' id='checkbox' checked='false' >  </div></td>");   //add checkbox
             };
@@ -201,11 +226,10 @@
                     var InvoiceDate = table.rows[i].cells[2].innerHTML;
                     var Currency = table.rows[i].cells[3].innerHTML;
                     var amount = table.rows[i].cells[4].innerHTML;
-
                     arr.push(supplier, InVoiceNo, InvoiceDate, Currency, amount);
                     arr.push("\n");
                 };
-                
+
                 if (confirm('Save?')) {
                     localStorage.setItem("Data Table", document.getElementById("Data Table").innerHTML);
                     alert("Changes Saved!");
@@ -213,11 +237,15 @@
 
             };
         </script>
-
-
-
+        <h2><strong>Note:</strong></h2>
+        <ul>
+            <li><strong>Supplier, currency, and amount must be filled for push notifications for the reminder to be shown</strong></li>
+            <li>When adding new reminders, default currency is set to SGD</li>
+            <li>When push notifications are shown, click on the notification to acknowledge <strong>(Do not close the notification)</strong></li>
+            <li>To check which notifications are acknowledged, right-click on the screen>Inspect>Console</li>
+            <li>When all notifications are acknowledged, a popup will appear informing the user that all notifications have been acknowledegd</li>
+        </ul>
+        
     </div>
-
-
 </body>
 </html>
