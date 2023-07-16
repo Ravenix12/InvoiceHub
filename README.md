@@ -21,7 +21,7 @@ The notifications and reminders system allows users to create and modify reminde
 
 ### Searching localStorage for reminders
 
-After logging in, the Notifications system searches localStorage and extracts all the information stored. It then iterates through every element, extracts the outstanding amount, currency, and supplier from each table, creates a formatted string with the extracted information which is then shown as a push notification. 
+After logging in, the Notifications system searches localStorage and extracts all the information stored. It then iterates through every element, extracts the outstanding amount, currency, and supplier from each table, creates a formatted string with the extracted information which is then shown as a push notification. Users must press the notificatoin to aclmpw;edge. Acknowledging all notifications results in an alert message appearing informing that all notifications have been acknowledged.
 
 ### Adding Reminders
 Pressing the "Add Reminder" button causes a new row to be added in the table. Users can edit each table cell with the relevant information. 
