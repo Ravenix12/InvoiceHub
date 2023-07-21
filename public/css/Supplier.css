@@ -1,0 +1,38 @@
+.content{
+    color: #033246; 
+}
+.register{
+    display:flex;
+    flex-direction:column ;
+}
+
+.form{
+    display:flex;
+    flex-direction:column ;
+}
+
+.button-main{
+    color:#033246;
+    text-align: center;  
+    padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 5px; 
+    margin-right: 10px; 
+    border: 1px solid #2D5261;
+    box-shadow: 5px 5px 10px rgba(45,82,97,0.3);
+    border-radius: 10px;
+    width: 210px;
+} 
+
+.reg-title{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+input{
+    width: 210px;
+}
+.cell{
+    text-align: center;
+}
